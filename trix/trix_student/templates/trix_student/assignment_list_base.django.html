@@ -56,6 +56,8 @@
                 </div>
                 {% if selectable_tags %}
                     <form ng-controller="AddTagCtrl" class="trix-no-print">
+                        {% include "trix_student/include/tag_filter.django.html" %}
+                        {% comment %}
                         <h3>{% trans "Filter" %}:</h3>
                         <select ng-model="tagToAdd" ng-change="addTag()">
                             <option value="" selected>-- {% trans "Select a tag" %} --</option>
@@ -63,6 +65,7 @@
                                 <option value="{{ tag }}">{{ tag }}</option>
                             {% endfor %}
                         </select>
+                        {% endcomment %}
                     </form>
                 {% endif %}
 
