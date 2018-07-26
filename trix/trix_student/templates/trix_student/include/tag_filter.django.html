@@ -1,0 +1,16 @@
+{% load i18n %}
+
+
+<h3>{% trans "Filter" %}:</h3>
+<div ng-controller="AddTagCtrl as tag_ctrl" class="trix-no-print trix-tag-filter-div">
+    <form formnovalidate>
+        <input list="tags" ng-model="tagToAdd" class="trix-tag-filter-input">
+            <datalist id="tags">
+                {% for tag in selectable_tags %}
+                    <option value="{{ tag }}">{{ tag }}</option>
+                {% endfor %}
+            </datalist>
+        </input>
+        <button class="trix-tag-filter-submit" ng-click="addTag()">{% trans "Filter" %}</button>
+    </form>
+</div>
