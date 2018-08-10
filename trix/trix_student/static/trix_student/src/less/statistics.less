@@ -29,3 +29,55 @@
     padding-left: 50px;
     padding-right: 15px;
 }
+
+.trix-div-sort-buttons {
+    overflow: auto;
+    background: #eee;
+    width: 100%;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin: 20px 0 0 0 ;
+    display: flex;
+    align-items: center;
+    border-top: 1px dashed #ccc;
+}
+
+.trix-sort-button {
+    height: 36px;
+    width: 200px;
+    margin: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    border-right: 1px dashed #ccc;
+    border-left: 1px dashed #ccc;
+    display: flex;
+    justify-content: space-between;
+
+    > .btn {
+        padding: 0 2px;
+        margin: 0;
+        text-decoration: none;
+        width: 100%;
+    }
+
+    > .fa {
+        padding: 0;
+        padding-top: 2px;
+        margin: 0;
+    }
+
+}
+
+@media(max-width: 992px) {
+    .trix-div-sort-buttons {
+        display: block;
+    }
+
+    .trix-sort-button {
+        width: 100%;
+    }
+}
+
+.trix-datetime-container {
+    padding-left: 39px !important;
+}

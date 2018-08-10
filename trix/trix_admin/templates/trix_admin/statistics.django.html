@@ -1,5 +1,7 @@
 {% extends "cradmin_legacy/base.django.html" %}
-{% load i18n %}l
+{% load i18n %}
+{% load static %}
+{% load trix_core_tags %}
 {% load trix_admin_tags %}
 {% load cradmin_legacy_tags %}
 
@@ -16,6 +18,11 @@
 {% endblock pageheader-inner %}
 
 {% block content %}
+  <script>
+    // Include app dependency on ngMaterial
+    angular.module('YourApp', ['ngMaterial', 'ngMessages'])
+      .controller("DateTimeCtrl", []);
+  </script>
     <div class="trix-page-sub-header">
         <div class="trix-container-fluid">
             <h1>{% trans "Aggregated statistics on how the assignments where solved" %}</h1>
@@ -59,9 +66,65 @@
                             {% trans "Download csv file" %}
                         </a></li>
                     {% endif %}
-
                 </ul>
             </div>
+        </div>
+        <div class="container trix-datetime-container">
+            <p>{% trans "Filter by date" %}:</p>
+            <div class="row">
+                <div class='col-sm-6 col-md-3'>
+                    <div class="form-group">
+                        <div class='input-group date' id='datetimepicker'>
+                            <input type='text' class="form-control" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-time"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    $(function () {
+                        $('#datetimepicker').datetimepicker({
+                            format:'YYYY-MM-DD'
+                        });
+                    });
+                </script>
+                <div class='col-sm-6 col-md-3'>
+                    <div class="form-group">
+                        <div class='input-group date' id='datetimepicker2'>
+                            <input type='text' class="form-control" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-time"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    $(function () {
+                        $('#datetimepicker2').datetimepicker({
+                            format:'YYYY-MM-DD'
+                        });
+                    });
+                </script>
+            </div>
+        </div>
+        <div class="trix-div-sort-buttons">
+            {% for name, order in selectable_sort_list %}
+                <span class="btn trix-sort-button">
+                    {% order_in_use order sort_list as is_negative %}
+                    <a href="?{% url_replace 'ordering' '' %}"
+                    style="{% if order not in sort_list %}visibility:hidden;{% endif %}">
+                        <span class="fa fa-times"></span>
+                    </a>
+                    <a class="btn btn-link"
+                        href="?{% url_replace 'ordering' order|reverse_sort:is_negative %}">
+                        {{ name }}
+                    </a>
+                    <span class="fa {% if is_negative %}fa-arrow-up{% else %}fa-arrow-down{% endif %}"
+                        {% if order not in sort_list %}style="visibility:hidden;"{% endif %}>
+                    </span>
+                </span>
+            {% endfor %}
         </div>
     </div>
 
