@@ -1,4 +1,4 @@
-{% extends "cradmin_legacy/base.django.html" %}
+ {% extends "cradmin_legacy/base.django.html" %}
 {% load i18n %}
 {% load trix_core_tags %}
 {% load trix_admin_tags %}
@@ -143,7 +143,7 @@
                         <button class="btn btn-default btn-xs" disabled>{{ tag.tag }}</button>
                     {% endfor %}
                 </span>
-                <p>{{ assignment.id }}</p>
+                <p>#{{ assignment.id }}</p>
             </div>
             <div class="progress-info">
                 {% compute_and_set_stats_for_assignment assignment 'bymyself' user_count from_date to_date as bymyself %}

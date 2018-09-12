@@ -16,3 +16,40 @@
         font-size: 1.1em;
     }
 }
+
+.trix-user-level-progress {
+    min-height: 80px;
+}
+
+.trix-user-page-header {
+    margin-bottom: 0;
+    padding-bottom: 30px;
+}
+
+.trix-user-assignments-container {
+    margin-top: 0;
+    margin-bottom: 70px;
+}
+
+.trix-user-assignment {
+    border: 1px solid #ccc;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 4px;
+
+    > h3 {
+        margin: 0 0 12px 0;
+    }
+
+    &.trix-user-assignment-notsolved {
+        background-color: #f4f4f4;
+    }
+
+    &.trix-user-assignment-withhelp {
+        background-color: @state-warning-bg;
+    }
+
+    &.trix-user-assignment-solvedbymyself {
+        background-color: @state-success-bg;
+    }
+}

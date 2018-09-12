@@ -12,6 +12,24 @@
             <div id="assignments-taggingbox" class="col-sm-3 col-sm-push-9 col-md-3 col-md-push-9 trix-no-print">
                 {% if request.user.is_authenticated and assignmentlist_with_howsolved %}
                     <div ng-controller="AssignmentListProgressController"
+                         class="trix-user-level-progress"
+                         ng-cloak>
+                        <p>{% trans "Level" %}
+                        {% verbatim %}
+                        {{ level }}</p>
+                        <div class="progress">
+                            <div class="progress-bar bg-success"
+                                 role="progressbar"
+                                 aria-valuenow="{{ level_progress }}"
+                                 aria-valuemin="0"
+                                 aria-valuemax="100"
+                                 style="width: {{ level_progress }}%;">
+                                {{ experience }}
+                            </div>
+                        </div>
+                        {% endverbatim %}
+                    </div>
+                    <div ng-controller="AssignmentListProgressController"
                             class="assignments-progressbox"
                             ng-cloak>
                         <div ng-show="loading">
@@ -22,19 +40,21 @@
                             {% verbatim %}
                                 <div class="progress">
                                     <div class="progress-bar"
-                                            ng-class="progressBarClass"
-                                            role="progressbar"
-                                            aria-valuenow="{{ solvedPercentage }}"
-                                            aria-valuemin="0"
-                                            aria-valuemax="100"
-                                            style="width: {{ solvedPercentage }}%;">
+                                         ng-class="progressBarClass"
+                                         role="progressbar"
+                                         aria-valuenow="{{ solvedPercentage }}"
+                                         aria-valuemin="0"
+                                         aria-valuemax="100"
+                                         style="width: {{ solvedPercentage }}%;">
                                         {{ solvedPercentage }}%
                                     </div>
                                 </div>
                             {% endverbatim %}
-                            <p class="text-muted"><small>
-                                {{ progresstext }}
-                            </small></p>
+                            <p class="text-muted">
+                                <small>
+                                    {{ progresstext }}
+                                </small>
+                            </p>
                         </div>
                     </div>
                 {% endif %}

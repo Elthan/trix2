@@ -86,16 +86,10 @@ class AssignmentStatsMixin(object):
         tags_string = self.request.GET.get('tags')
         if tags_string:
             tags = []
-            removetags = []
             for tag in tags_string.split(','):
                 tag = tag.strip()
                 if tag:
-                    if tag.startswith('-'):
-                        removetags.append(tag.lstrip('-'))
-                    else:
-                        tags.append(tag)
-            for removetag in removetags:
-                tags.remove(removetag)
+                    tags.append(tag)
         else:
             tags = []
         if course_tag is not None and course_tag not in tags:
@@ -250,7 +244,8 @@ class StatisticsChartView(AssignmentStatsMixin, ListView):
         context['selectable_sort_list'] = [(_('Title'), 'title'),
                                            (_('ID'), 'id'),
                                            (_('Date created'), 'created_datetime'),
-                                           (_('Last updated'), 'lastupdate_datetime')]
+                                           (_('Last updated'), 'lastupdate_datetime'),
+                                           (_('Solved'), 'howsolved__howsolved')]
         context['from_date'] = self.from_date
         context['to_date'] = self.to_date
         return context
@@ -261,6 +256,7 @@ class StatisticsChartView(AssignmentStatsMixin, ListView):
             ordering = ordering.split(',')
             for order in ordering:
                 try:
+                    # Apply sort immediately
                     str(self.model.objects.order_by(order))
                 except FieldError:
                     return None

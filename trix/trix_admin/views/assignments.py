@@ -1,21 +1,16 @@
 import re
 from django import forms
-from django import http
 from django.core.exceptions import ValidationError
 from django.core import serializers
+from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.template import defaultfilters
 from django.template.defaultfilters import truncatechars
 from django.utils.translation import ugettext_lazy as _
 from django.urls import reverse
-from django.views.generic import TemplateView
-from cradmin_legacy.viewhelpers import objecttable
-from cradmin_legacy.viewhelpers import create
-from cradmin_legacy.viewhelpers import update
-from cradmin_legacy.viewhelpers import delete
-from cradmin_legacy.viewhelpers import multiselect
-from cradmin_legacy import crispylayouts
-from cradmin_legacy import crapp
+from django.views.generic import TemplateView, View
+from cradmin_legacy.viewhelpers import objecttable, create, update, delete, multiselect
+from cradmin_legacy import crispylayouts, crapp
 from crispy_forms import layout
 from crispy_forms.utils import flatatt
 from cradmin_legacy.acemarkdown.widgets import AceMarkdownWidget
@@ -164,6 +159,7 @@ class AssignmentCreateUpdateMixin(object):
         return [
             layout.Div('title', css_class="trix-focusfield"),
             layout.Div('tags', css_class="trix-focusfield"),
+            layout.Div('points', css_class="trix-focusfield"),
             layout.Div('hidden', css_class="trix-focusfield"),
             layout.Div('text', css_class="trix-focusfield"),
             layout.Div('solution', css_class="trix-focusfield"),
@@ -252,7 +248,7 @@ class AssignmentMultiEditView(AssignmentQuerysetForRoleMixin, multiselect.MultiS
             return self.render_to_response(self.get_context_data(
                 form=form,
                 deserializererror=e))
-        return http.HttpResponseRedirect(self.request.cradmin_app.reverse_appindexurl())
+        return HttpResponseRedirect(self.request.cradmin_app.reverse_appindexurl())
 
     def get_initial(self):
         return {
@@ -294,7 +290,7 @@ class AssignmentMultiAddTagView(AssignmentQuerysetForRoleMixin, multiselect.Mult
                                                                         defaults={'category': ''})
                 assignment.tags.add(object)
 
-        return http.HttpResponseRedirect(self.request.cradmin_app.reverse_appindexurl())
+        return HttpResponseRedirect(self.request.cradmin_app.reverse_appindexurl())
 
     def get_pagetitle(self):
         return _('tags on selected assignments')
@@ -330,7 +326,7 @@ class AssignmentMultiRemoveTagView(AssignmentQuerysetForRoleMixin, multiselect.M
             except trix_models.Tag.DoesNotExist:
                 pass
 
-        return http.HttpResponseRedirect(self.request.cradmin_app.reverse_appindexurl())
+        return HttpResponseRedirect(self.request.cradmin_app.reverse_appindexurl())
 
     def get_pagetitle(self):
         return _('tags on selected assignments')

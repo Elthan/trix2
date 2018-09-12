@@ -16,8 +16,6 @@
 .trix-assignment {
     margin-top: 30px;
     margin-bottom: 30px;
-    // padding-top: 80px;
-    // border-top: 1px solid #eee;
     padding: 20px;
     border-radius: 4px;
     font-size: @trix-article-font-size;
@@ -37,13 +35,6 @@
         background-color: @state-success-bg;
     }
 
-    @media (min-width: @screen-sm-min) {
-        &:first-child {
-            // border-top: none;
-            // padding-top: 0;
-        }
-    }
-
     &>h2 {
         margin-top: 0;
         padding-top: 0;
@@ -54,7 +45,6 @@
     }
 
     .trix-assignmenthowsolved {
-        // margin-top: 40px;
         .trix-assignmenthowsolvedsaving {
             display: inline-block;
             margin-left: 10px;
@@ -84,11 +74,30 @@
     );
 }
 
-#assignments-taggingbox {
-    // *:first-child h3 {
-    //     margin-top: 0;
-    // }
+.trix-assignment-points {
+    color: #555;
+    font-size: 16px;
+    width: auto;
+    float: right;
+}
 
+@trix-level-easy: rgba(0, 255, 0, 0.5);
+@trix-level-medium: rgba(255, 255, 0, 0.5);
+@trix-level-hard: rgba(255, 0, 0, 0.5);
+
+.trix-border-easy {
+    border: 1px solid @trix-level-easy;
+}
+
+.trix-border-medium {
+    border: 1px solid @trix-level-medium;
+}
+
+.trix-border-hard {
+    border: 1px solid @trix-level-hard;
+}
+
+#assignments-taggingbox {
     .assignments-progressbox {
         min-height: 80px;
         .fa.fa-spin {
@@ -132,15 +141,6 @@
     pre {
         background-color: #fff;
     }
-
-    // p, pre, blockquote {
-    //     &:last-child {
-    //         margin-bottom: 0;
-    //     }
-    // }
-    // p:last-child {
-    //     padding-bottom: 0;
-    // }
 
     h1 {
         font-size: ceil(@font-size-base * 1.8);

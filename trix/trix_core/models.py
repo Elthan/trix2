@@ -3,6 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import BaseUserManager
+from django.conf import settings
 
 
 class TrixUserManager(BaseUserManager):
@@ -58,6 +59,18 @@ class User(AbstractBaseUser):
         null=True
     )
 
+    experience = models.IntegerField(
+        verbose_name=_('Experience points'),
+        default=0,
+        null=False
+    )
+
+    level = models.IntegerField(
+        verbose_name=_('Level'),
+        default=1,
+        null=False
+    )
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
@@ -76,6 +89,55 @@ class User(AbstractBaseUser):
 
     def get_short_name(self):
         return self.displayname
+
+    def change_exp(self, xp):
+        '''
+        Changes experience up or down to a minimum of 0.
+        '''
+        self.experience += xp
+        if (self.experience < 0):
+            self.experience = 0
+        # Check if user has leveled up
+        self.calculate_level()
+
+    def calculate_level(self):
+        '''
+        Calculates the level of the user by going through the level caps in
+        reverse order and finding the first time the experience is larger than the
+        experience required.
+        '''
+        level_caps = settings.LEVEL_CAPS
+        for idx in reversed(xrange(len(level_caps))):
+            if self.experience >= level_caps[idx]:
+                self.level = idx + 1
+                break
+
+    def current_level_exp(self):
+        """
+        Returns the experience required for the current level.
+        """
+        level_caps = settings.LEVEL_CAPS
+        if self.level - 1 < 0:
+            return level_caps[0]
+        return level_caps[self.level - 1]
+
+    def next_level_exp(self):
+        """
+        Returns the experience required for the next level.
+        """
+        level_caps = settings.LEVEL_CAPS
+        if self.level >= len(level_caps) - 1:
+            return level_caps[len(level_caps) - 1]
+        elif self.level < 0:
+            return level_caps[0]
+        return level_caps[self.level]
+
+    def level_progress(self):
+        """
+        Returns percentage progress towards next level as int at maximum 100.
+        """
+        return min(int(round((self.experience - self.current_level_exp()) /
+                   float(self.next_level_exp() - self.current_level_exp()) * 100)), 100)
 
     @property
     def displayname(self):
@@ -259,28 +321,39 @@ class Assignment(models.Model):
     title = models.CharField(
         max_length=255,
         verbose_name=_('Title'))
+
     tags = models.ManyToManyField(
         Tag,
         verbose_name=_('Tags'))
+
     text = models.TextField(
         verbose_name=_('Assignment text'),
         help_text=_('Write the assignment here.'))
+
     solution = models.TextField(
         blank=True, null=False, default='',
         verbose_name=_('Solution'),
         help_text=_('If you want your students to be able to view a suggested solution, write the '
                     'solution here.'))
+
     created_datetime = models.DateTimeField(
         verbose_name=_('Created'),
         auto_now_add=True)
+
     lastupdate_datetime = models.DateTimeField(
         verbose_name=_('Last changed'),
         auto_now=True)
+
     HIDDEN_CHOICES = [(True, _('Yes')), (False, _('No'))]
     hidden = models.NullBooleanField(
         choices=HIDDEN_CHOICES,
         default=False,
         verbose_name=_('Hide assignment from students'))
+
+    points = models.IntegerField(
+        default=10,
+        verbose_name=_('Point value')
+    )
 
     objects = AssignmentManager()
 
@@ -342,15 +415,18 @@ class Permalink(models.Model):
         Course,
         verbose_name=_('Course'),
         on_delete=models.CASCADE)
+
     tags = models.ManyToManyField(
         Tag,
         verbose_name=_('Tags'))
+
     title = models.CharField(
         verbose_name=_('Title'),
         max_length=255,
         blank=True,
         null=False,
         default='')
+
     description = models.TextField(
         verbose_name=_('Description'),
         blank=True,

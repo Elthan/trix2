@@ -34,6 +34,29 @@
                     <h3>{% trans "Role" %}</h3>
                     <p>{{ user_role }}</p>
                 </li>
+                <li>
+                    <h3>{% trans "Experience" %}</h3>
+                    <div ng-controller="AssignmentListProgressController"
+                         class="trix-user-level-progress"
+                         ng-cloak>
+                         <p>{% trans "Level" %}: {{ user.level }}</p>
+                         <div class="progress">
+                            <div class="progress-bar bg-success"
+                                 role="progressbar"
+                                 aria-valuenow="{{ user.level_progress }}"
+                                 aria-valuemin="0"
+                                 aria-valuemax="100"
+                                 style="width: {{ user.level_progress }}%;">
+                                {{ user.experience }}
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a href="{% url 'trix_user_statistics' %}">
+                        <h3>{% trans "Statistics" %}</h3>
+                    </a>
+                </li>
             </ul>
         </div>
         <div class="trix-user-buttons">
@@ -44,16 +67,4 @@
         </div>
     </div>
 </div>
-{% comment %}
-TODO: List assignments that the user has solved
-<div class="container">
-    {% include "trix_student/include/pager.django.html" with
-        pager_extraclass="pager-no-topmargin hidden-xs" %}
-    {% for item in solved_assignments %}
-        <h3>{{ item.assignment }}</h3>
-        <p>{{ item.howsolved }}</p>
-    {% endfor %}
-    {% include "trix_student/include/pager.django.html" %}
-</div>
-{% endcomment %}
 {% endblock body %}

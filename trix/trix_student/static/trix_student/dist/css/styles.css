@@ -9079,6 +9079,21 @@ fieldset[disabled] .btn-trix-admin.active {
 .trix-assignment-hidden {
   background: repeating-linear-gradient(-45deg, #ccc, #ccc 1px, transparent 1px, transparent 60px);
 }
+.trix-assignment-points {
+  color: #555;
+  font-size: 16px;
+  width: auto;
+  float: right;
+}
+.trix-border-easy {
+  border: 1px solid rgba(0, 255, 0, 0.5);
+}
+.trix-border-medium {
+  border: 1px solid rgba(255, 255, 0, 0.5);
+}
+.trix-border-hard {
+  border: 1px solid rgba(255, 0, 0, 0.5);
+}
 #assignments-taggingbox .assignments-progressbox {
   min-height: 80px;
 }
@@ -9241,6 +9256,7 @@ fieldset[disabled] .btn-trix-admin.active {
   opacity: 0.5;
   align-self: flex-end;
   margin-right: 10px;
+  margin-left: 20px;
   border-bottom: 1px solid #ccc;
   font-size: 22px;
 }
@@ -9514,7 +9530,8 @@ body {
 }
 .trix-focusfield .controls .textinput,
 .trix-focusfield .controls .textarea,
-.trix-focusfield .controls .select {
+.trix-focusfield .controls .select,
+.trix-focusfield #id_points {
   max-width: 60%;
   border-right: 1px dashed #ccc;
   border: none;
@@ -9530,7 +9547,8 @@ body {
 @media (max-width: 992px) {
   .trix-focusfield .controls .textinput,
   .trix-focusfield .controls .textarea,
-  .trix-focusfield .controls .select {
+  .trix-focusfield .controls .select,
+  .trix-focusfield #id_points {
     max-width: 100%;
     border-right: none;
   }
@@ -9538,7 +9556,8 @@ body {
 .trix-focusfield .controls .textarea {
   font-size: 16px;
 }
-.trix-focusfield .controls .select {
+.trix-focusfield .controls .select,
+.trix-focusfield #id_points {
   padding: 10px 0px 10px 50px;
   font-size: 16px;
 }
@@ -9555,14 +9574,14 @@ body {
   border-right: 1px dashed #ccc;
   padding: 20px 50px 40px 50px;
 }
-.cradmin-acemarkdown .ace_editor {
-  height: 500px;
-}
 @media (max-width: 992px) {
   .cradmin-div-styled-as-textarea {
     width: 100%;
     border-right: none;
   }
+}
+.cradmin-acemarkdown .ace_editor {
+  height: 500px;
 }
 .controls .help-block {
   max-width: 30%;
@@ -9698,6 +9717,35 @@ body {
 }
 .trix-user-text > p {
   font-size: 1.1em;
+}
+.trix-user-level-progress {
+  min-height: 80px;
+}
+.trix-user-page-header {
+  margin-bottom: 0;
+  padding-bottom: 30px;
+}
+.trix-user-assignments-container {
+  margin-top: 0;
+  margin-bottom: 70px;
+}
+.trix-user-assignment {
+  border: 1px solid #ccc;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 4px;
+}
+.trix-user-assignment > h3 {
+  margin: 0 0 12px 0;
+}
+.trix-user-assignment.trix-user-assignment-notsolved {
+  background-color: #f4f4f4;
+}
+.trix-user-assignment.trix-user-assignment-withhelp {
+  background-color: #fcf8e3;
+}
+.trix-user-assignment.trix-user-assignment-solvedbymyself {
+  background-color: #dff0d8;
 }
 /**
 * Styles for the consent form page.

@@ -130,7 +130,7 @@
           $scope.saving = false;
           return $scope.howsolved = null;
         }).catch(function(response) {
-          if (reponse.status === 404) { // Handle 404 just like 200
+          if (response.status === 404) { // Handle 404 just like 200
             $scope.saving = false;
             return $scope.howsolved = null;
           } else {
@@ -156,6 +156,9 @@
         return $http.get(apiUrl.toString()).then(function(response) {
           $scope.loading = false;
           $scope.solvedPercentage = response.data.percent;
+          $scope.experience = response.data.experience;
+          $scope.level = response.data.level;
+          $scope.level_progress = response.data.level_progress;
           if ($scope.solvedPercentage > 1 && $scope.solvedPercentage < 20) {
             return $scope.progressBarClass = 'progress-bar-danger';
           } else if ($scope.solvedPercentage < 45) {
@@ -167,7 +170,7 @@
           }
         }).catch(function(response) {
           return console.error('Failed to load progress:',
-    reponse.statusText);
+    response.statusText);
         });
       };
       unbindProgressChanged = $rootScope.$on('assignments.progressChanged',

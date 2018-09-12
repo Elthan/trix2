@@ -1,7 +1,10 @@
 {% load i18n %}
 {% load trix_core_tags %}
 
-<section class="trix-assignment {% if assignment.hidden %}trix-assignment-hidden{% endif %}"
+<section class="trix-assignment {% if assignment.hidden %}trix-assignment-hidden{% endif %}
+        {% if assignment.points <= 10 %}trix-border-easy
+        {% elif assignment.points <= 20 %}trix-border-medium
+        {% else %}trix-border-hard{% endif %}"
         ng-controller="AssignmentCtrl"
         ng-class="boxClass"
         ng-init="
@@ -24,6 +27,10 @@
         {% endif %}
     </h2>
 
+    <div class="trix-assignment-points">
+        <p>{{ assignment.points }} {% trans "points" %}</p>
+    </div>
+
     {% if not disable_tags %}
         <div class="assignment-tags">
             {% for tag in assignment.tags.all %}
@@ -34,7 +41,7 @@
         </div>
     {% endif %}
 
-    <section class="trix-assignmenttext  trix-markdownarticle" ng-non-bindable>
+    <section class="trix-assignmenttext trix-markdownarticle" ng-non-bindable>
         {% trix_assignment_markdown assignment.text %}
     </section>
     {% if request.user.is_authenticated and not disable_howsolved_box %}

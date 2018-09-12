@@ -1,8 +1,7 @@
 import json
 from django.views.generic import View
-from django import http
+from django import http, forms
 from django.shortcuts import get_object_or_404
-from django import forms
 
 from trix.trix_core import models
 
@@ -56,6 +55,8 @@ class HowsolvedView(View):
                     howsolved=howsolved,
                     assignment=assignment,
                     user=request.user)
+                self.request.user.change_exp(assignment.points)
+                self.request.user.save()
             else:
                 howsolvedobject.howsolved = howsolved
                 howsolvedobject.save()
@@ -75,4 +76,9 @@ class HowsolvedView(View):
             })
         else:
             howsolved.delete()
+            assignment = self._get_assignment()
+            request.user.change_exp(-assignment.points)
+            if (request.user.experience < 0):
+                request.user.experience = 0
+            request.user.save()
             return self._200_response({'success': True})

@@ -1,6 +1,7 @@
 import urllib
 import json
 from django import http
+from django.conf import settings
 from django.views.generic import ListView
 from django.utils.translation import ugettext_lazy as _
 
@@ -50,6 +51,9 @@ class AssignmentListViewBase(ListView):
             .filter(user=self.request.user.id)
         num_solved = how_solved.count()
         num_total = assignments.count()
+        exp = self.request.user.experience
+        lvl = self.request.user.level
+        lvl_progress = self.request.user.level_progress()
         if num_total == 0:
             percent = 0
         else:
@@ -57,7 +61,10 @@ class AssignmentListViewBase(ListView):
         return {
             'num_total': num_total,
             'num_solved': num_solved,
-            'percent': percent
+            'percent': percent,
+            'experience': exp,
+            'level': lvl,
+            'level_progress': lvl_progress
         }
 
     def _progressjson(self):

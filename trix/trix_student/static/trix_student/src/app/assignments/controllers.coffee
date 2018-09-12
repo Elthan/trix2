@@ -118,6 +118,9 @@ angular.module('trixStudent.assignments.controllers', ['ngRoute'])
         .then (response) ->
           $scope.loading = false
           $scope.solvedPercentage = response.data.percent
+          $scope.experience = response.data.experience
+          $scope.level = response.data.level
+          $scope.level_progress = response.data.level_progress
           if $scope.solvedPercentage > 1 and $scope.solvedPercentage < 20
             $scope.progressBarClass = 'progress-bar-danger'
           else if $scope.solvedPercentage < 45
@@ -127,7 +130,7 @@ angular.module('trixStudent.assignments.controllers', ['ngRoute'])
           else
             $scope.progressBarClass = ''
         .catch (response) ->
-          console.error('Failed to load progress:', reponse.statusText)
+          console.error('Failed to load progress:', response.statusText)
 
     unbindProgressChanged = $rootScope.$on 'assignments.progressChanged', ->
       $scope._loadProgress()

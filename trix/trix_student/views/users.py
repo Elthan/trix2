@@ -1,4 +1,5 @@
 from django.views.generic import ListView, DeleteView
+from django.core.exceptions import FieldError
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.translation import ugettext_lazy as _
 from django.http import Http404
@@ -13,12 +14,8 @@ class ProfilePageView(LoginRequiredMixin, ListView):
 
     def get_context_data(self):
         context = super(ProfilePageView, self).get_context_data()
-        context['solved_assignments'] = self.get_solved_assignments()
         context['user_role'] = self.get_user_role()
         return context
-
-    def get_solved_assignments(self):
-        return models.HowSolved.objects.all()
 
     def get_user_role(self):
         if self.request.user.is_superuser:
@@ -41,3 +38,87 @@ class UserDeleteView(LoginRequiredMixin, DeleteView):
         if not user.id == self.request.user.id:
             raise Http404
         return user
+
+
+class UserStatisticsView(LoginRequiredMixin, ListView):
+    template_name = "trix_student/user_statistics.django.html"
+    model = models.HowSolved
+    paginate_by = 20
+
+    def get(self, request, *args, **kwargs):
+        self.tags = self.get_tags()
+        self.sort_list = self.get_sort_list()
+        return super(UserStatisticsView, self).get(request, *args, **kwargs)
+
+    def get_queryset(self):
+        queryset = super(UserStatisticsView, self).get_queryset()
+        for tagstring in self.tags:
+            queryset = (queryset.filter(assignment__tags__tag=tagstring))
+        # howsolved = models.HowSolved.objects.filter(user=self.request.user)
+        queryset = queryset.filter(user=self.request.user)
+        queryset = queryset.distinct()
+        return queryset
+
+    def get_context_data(self):
+        context = super(UserStatisticsView, self).get_context_data()
+        solved_assignments = self.get_queryset()
+        context['solved_assignments'] = solved_assignments
+        context['bymyself_assignments'] = solved_assignments.filter(howsolved='bymyself')
+        context['withhelp_assignments'] = solved_assignments.filter(howsolved='withhelp')
+        context['selected_tags_list'] = self.tags
+        context['selected_tags_string'] = ','.join(self.tags)
+        context['selectable_tags_list'] = self._get_selectable_tags()
+        context['sort_list'] = ','.join(self.sort_list)
+        context['selectable_sort_list'] = [(_('Title'), 'assignment__title'),
+                                           (_('ID'), 'assignment__id'),
+                                           (_('Points'), 'assignment__points'),
+                                           (_('Solved time'), 'solved_datetime'),
+                                           (_('How solved'), 'howsolved')]
+        return context
+
+    def get_tags(self, course_tag=None):
+        tags_string = self.request.GET.get('tags')
+        if tags_string:
+            tags = []
+            for tag in tags_string.split(','):
+                tag = tag.strip()
+                if tag:
+                    tags.append(tag)
+        else:
+            tags = []
+        if course_tag is not None and course_tag not in tags:
+            tags.append(course_tag)
+        return tags
+
+    def get_sort_list(self):
+        order_list = self.request.GET.get('ordering')
+        if order_list:
+            sort_list = []
+            for order in order_list.split(','):
+                order = order.strip()
+                sort_list.append(order)
+        else:
+            sort_list = []
+        return sort_list
+
+    def _get_selectable_tags(self):
+        assignments = models.Assignment.objects.filter(howsolved__in=self.get_queryset())
+        tags = (models.Tag.objects
+                .filter(assignment__in=assignments)
+                .exclude(tag__in=self.tags)
+                .order_by('tag')
+                .distinct()
+                .values_list('tag', flat=True))
+        return tags
+
+    def get_ordering(self):
+        ordering = self.request.GET.get('ordering', None)
+        if ordering is not None:
+            ordering = ordering.split(',')
+            for order in ordering:
+                try:
+                    # str to apply sort immediately
+                    str(self.model.objects.order_by(order))
+                except FieldError:
+                    return None
+        return ordering

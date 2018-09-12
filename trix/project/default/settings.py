@@ -124,3 +124,6 @@ TRIX_STUDENT_GETTINGSTARTEDGUIDE_URL = 'http://trix2.readthedocs.org/en/latest/'
 
 # Used to update the icon map since the legacy version is outdated or does not include what we need.
 CRADMIN_LEGACY_CSS_ICON_MAP = css_icon_map.FONT_AWESOME
+
+# Experience required for each level
+LEVEL_CAPS = [0, 20, 40, 60, 80, 100]

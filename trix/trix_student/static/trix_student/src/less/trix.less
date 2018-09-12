@@ -22,20 +22,16 @@ body {
 .trix-roleselect .cradmin-legacy-focusedpage-wrapper {
     width: 65%;
     margin-top: 40px;
-}
 
-@media(max-width: 992px) {
-    .trix-roleselect .cradmin-legacy-focusedpage-wrapper {
+    @media(max-width: 992px) {
         width: 100%;
     }
 }
 
 .trix-roleselect-container {
     width: 66%;
-}
 
-@media(max-width: 992px) {
-    .trix-roleselect-container {
+    @media(max-width: 992px) {
         width: 100%;
     }
 }
@@ -157,10 +153,8 @@ body {
 
 .objecttableview-multiselectcolumn {
     padding: 8px;
-}
 
-@media (min-width: 992px) {
-    .objecttableview-multiselectcolumn {
+    @media (min-width: 992px) {
         padding-left: 50px !important;
     }
 }
@@ -175,19 +169,15 @@ body {
     .btn-danger {
         color: #fff;
     }
-}
 
-@media (max-width: 500px) {
-    .cradmin-legacy-table {
+    @media (max-width: 500px) {
         & > thead tr th:nth-child(4),
         & > tbody tr td:nth-child(4) {
             display: none;
         }
     }
-}
 
-@media (max-width: 425px) {
-    .cradmin-legacy-table {
+    @media (max-width: 425px) {
         & > thead tr th:nth-child(3),
         & > tbody tr td:nth-child(3) {
             display: none;
@@ -237,7 +227,8 @@ body {
 
     .controls .textinput,
     .controls .textarea,
-    .controls .select {
+    .controls .select,
+    #id_points {
         max-width: 60%;
         border-right: 1px dashed #ccc;
         border: none;
@@ -249,12 +240,8 @@ body {
         height: auto;
         font-size: 24px;
         text-align: left;
-    }
 
-    @media(max-width: 992px) {
-        .controls .textinput,
-        .controls .textarea,
-        .controls .select {
+        @media(max-width: 992px) {
             max-width: 100%;
             border-right: none;
         }
@@ -264,7 +251,8 @@ body {
         font-size: @font-size-base;
     }
 
-    .controls .select {
+    .controls .select,
+    #id_points {
         padding: 10px 0px 10px 50px;
         font-size: @font-size-base;
     }
@@ -284,17 +272,15 @@ body {
     width: 60%;
     border-right: 1px dashed #ccc;
     padding: 20px 50px 40px 50px;
+
+    @media(max-width: 992px) {
+        width: 100%;
+        border-right: none;
+    }
 }
 
 .cradmin-acemarkdown .ace_editor {
     height: 500px;
-}
-
-@media(max-width: 992px) {
-    .cradmin-div-styled-as-textarea {
-        width: 100%;
-        border-right: none;
-    }
 }
 
 .controls .help-block {
@@ -302,10 +288,8 @@ body {
     margin-right: 10px;
     text-align: left;
     margin: 20px 10px;
-}
 
-@media(max-width: 992px) {
-    .controls .help-block {
+    @media(max-width: 992px) {
         display: none;
     }
 }
@@ -343,10 +327,8 @@ body {
     .form-control {
         margin: 5px 15px 10px 15px;
     }
-}
 
-@media (max-width: 992px) {
-    .cradmin_legacy_submitrow {
+    @media (max-width: 992px) {
         left: 0;
         right: 0;
 
