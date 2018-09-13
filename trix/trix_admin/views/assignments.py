@@ -111,6 +111,12 @@ class AssignmentListView(AssignmentQuerysetForRoleMixin, objecttable.ObjectTable
             objecttable.Button(app.reverse_appurl('create'), label=_('Create')),
             objecttable.Button(reverse('trix_student_course', kwargs={'course_id': course.id}),
                                label=_('Show on website')),
+            objecttable.Button(app.reverse_appurl('import'),
+                               label=_("Import assignments")),
+            # TODO: take all assignments -> export as X (same as CSV)
+            objecttable.Button(app.reverse_appurl('export'),
+                               label=_("Export assignments")),
+            # TODO: import page -> textinput -> read & find errors -> add to database
         ]
 
     def get_multiselect_actions(self):
@@ -373,6 +379,18 @@ class PreviewAssignmentView(TemplateView):
         return context
 
 
+class AssignmentImportView(TemplateView):
+    model = trix_models.Assignment
+    template_name = "trix_admin/import.django.html"
+
+
+class AssignmentExportView(View):
+    model = trix_models.Assignment
+
+    def get(self, request, *args, **kwargs):
+        return HttpResponse()
+
+
 class App(crapp.App):
     appurls = [
         crapp.Url(
@@ -406,5 +424,13 @@ class App(crapp.App):
         crapp.Url(
             r'^delete/(?P<pk>\d+)$',
             AssignmentDeleteView.as_view(),
-            name="delete")
+            name="delete"),
+        crapp.Url(
+            r'^import/$',
+            AssignmentImportView.as_view(),
+            name="import"),
+        crapp.Url(
+            r'^export$',
+            AssignmentExportView.as_view(),
+            name="export")
     ]

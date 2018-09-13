@@ -1,0 +1,29 @@
+{% extends "cradmin_legacy/base.django.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Import" %}{% endblock title %}
+
+{% block pageheader-inner %}
+    <div class="trix-page-header">
+        <i class="fa fa-upload" aria-hidden="true"></i>
+        <h1>
+            <strong>{% trans "Import" %}</strong>
+        </h1>
+    </div>
+{% endblock pageheader-inner %}
+
+{% block content %}
+    <div class="trix-page-sub-header">
+        <div class="trix-container-fluid">
+            {% blocktrans %}
+                Hello, this is a test!
+            {% endblocktrans %}
+        </div>
+    </div>
+    <div class="trix-container-fluid">
+        <input type="text" class="trix-import-text" />
+        <form method="post">
+            <input type="submit" name="{% trans Submit %}" />
+        </form>
+    </div>
+{% endblock content %}
