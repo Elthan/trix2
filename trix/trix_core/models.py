@@ -107,7 +107,7 @@ class User(AbstractBaseUser):
         experience required.
         '''
         level_caps = settings.LEVEL_CAPS
-        for idx in reversed(xrange(len(level_caps))):
+        for idx in reversed(range(len(level_caps))):
             if self.experience >= level_caps[idx]:
                 self.level = idx + 1
                 break
