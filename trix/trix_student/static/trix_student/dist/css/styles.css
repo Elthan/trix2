@@ -9224,6 +9224,11 @@ fieldset[disabled] .btn-trix-admin.active {
   align-items: center;
   border-top: 1px dashed #ccc;
 }
+@media (max-width: 992px) {
+  .trix-div-sort-buttons {
+    display: block;
+  }
+}
 .trix-sort-button {
   height: 36px;
   width: 200px;
@@ -9245,6 +9250,11 @@ fieldset[disabled] .btn-trix-admin.active {
   padding: 0;
   padding-top: 2px;
   margin: 0;
+}
+@media (max-width: 992px) {
+  .trix-sort-button {
+    width: 100%;
+  }
 }
 .assignment-info {
   display: flex;
@@ -9273,6 +9283,11 @@ fieldset[disabled] .btn-trix-admin.active {
   border-right: 1px solid #ccc;
   background-color: transparent !important;
 }
+@media (max-width: 992px) {
+  .assignment-info > span {
+    display: block;
+  }
+}
 .trix-date-container {
   display: flex;
   justify-content: flex-start;
@@ -9285,23 +9300,14 @@ fieldset[disabled] .btn-trix-admin.active {
   opacity: 0.65;
   margin-bottom: 0;
 }
-.trix-date-button {
-  margin-top: 22px;
-  margin-bottom: 14px;
-}
 @media (max-width: 992px) {
-  .trix-div-sort-buttons {
-    display: block;
-  }
-  .trix-sort-button {
-    width: 100%;
-  }
-  .assignment-info > span {
-    display: block;
-  }
   .trix-date-container > form > div {
     padding-right: 5px;
   }
+}
+.trix-date-button {
+  margin-top: 22px;
+  margin-bottom: 14px;
 }
 .trix-btn-neg {
   background-color: #f44336;
@@ -9746,6 +9752,21 @@ body {
 }
 .trix-user-assignment.trix-user-assignment-solvedbymyself {
   background-color: #dff0d8;
+}
+.trix-user-sort-button-group {
+  overflow: auto;
+  background: transparent;
+  width: 100%;
+  padding-left: 30px;
+  padding-right: 30px;
+  margin: 20px 0 0 0 ;
+  display: flex;
+  align-items: center;
+}
+@media (max-width: 720px) {
+  .trix-user-sort-button-group {
+    display: block;
+  }
 }
 /**
 * Styles for the consent form page.

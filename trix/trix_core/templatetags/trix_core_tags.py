@@ -1,4 +1,5 @@
 from django import template
+from django.utils.translation import ugettext as _
 
 from trix.trix_core import trix_markdown
 
@@ -39,3 +40,12 @@ def add_string_list(string_list, item):
 @register.filter
 def startswith(tag, item):
     return tag.startswith(item)
+
+
+@register.filter
+def howsolved_to_string(howsolved):
+    hs_dict = {'bymyself': _('By myself'), 'withhelp': _('With help')}
+    try:
+        return hs_dict[howsolved]
+    except KeyError:
+        return None

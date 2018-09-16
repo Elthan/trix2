@@ -179,7 +179,7 @@ class AssignmentStatsCsv(AssignmentStatsMixin, View):
                                     "{}%".format(notsolved['percent']),
                                     "{}".format(notsolved['count'])])
                 csvwriter.writerow('')
-        except Exception, e:
+        except Exception as e:
             raise e
         return response
 

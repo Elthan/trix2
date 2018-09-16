@@ -45,6 +45,10 @@
     display: flex;
     align-items: center;
     border-top: 1px dashed #ccc;
+
+    @media(max-width: 992px) {
+        display: block;
+    }
 }
 
 .trix-sort-button {
@@ -71,6 +75,9 @@
         margin: 0;
     }
 
+    @media(max-width: 992px) {
+        width: 100%;
+    }
 }
 
 .assignment-info {
@@ -102,6 +109,12 @@
             background-color: transparent !important;
         }
     }
+
+    @media(max-width: 992px) {
+        > span {
+            display: block;
+        }
+    }
 }
 
 .trix-date-container {
@@ -117,31 +130,15 @@
             margin-bottom: 0;
         }
     }
+
+    @media(max-width: 992px) {
+        > form > div {
+            padding-right: 5px;
+        }
+    }
 }
 
 .trix-date-button {
     margin-top: 22px;
     margin-bottom: 14px;
-}
-
-@media(max-width: 992px) {
-    .trix-div-sort-buttons {
-        display: block;
-    }
-
-    .trix-sort-button {
-        width: 100%;
-    }
-
-    .assignment-info {
-        > span {
-            display: block;
-        }
-    }
-
-    .trix-date-container {
-        > form > div {
-            padding-right: 5px;
-        }
-    }
 }
