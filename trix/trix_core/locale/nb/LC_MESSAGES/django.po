@@ -68,11 +68,11 @@ msgstr ""
 
 #: trix/trix_core/models.py:63
 msgid "Experience points"
-msgstr ""
+msgstr "Erfaringspoeng"
 
 #: trix/trix_core/models.py:69
 msgid "Level"
-msgstr ""
+msgstr "Nivå"
 
 #: trix/trix_core/models.py:80
 msgid "User"
@@ -150,7 +150,7 @@ msgstr "Skjul oppgaven for studenter"
 
 #: trix/trix_core/models.py:355
 msgid "Point value"
-msgstr ""
+msgstr "Poengverdi"
 
 #: trix/trix_core/models.py:361
 msgid "Assignment"
