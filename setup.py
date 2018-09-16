@@ -1,6 +1,8 @@
 from setuptools import setup, find_packages
 
-execfile('trix/version.py')
+with open('trix/version.py') as f:
+    code = compile(f.read(), "trix/version.py", 'exec')
+    exec(code)
 
 setup(
     name='trix',

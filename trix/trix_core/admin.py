@@ -94,7 +94,7 @@ class TagAdmin(admin.ModelAdmin):
                 Count('course_set', distinct=True))
 
     def get_assignment_count(self, tag):
-        return unicode(tag.assignment__count)
+        return str(tag.assignment__count)
     get_assignment_count.short_description = _('Number of assignments')
     get_assignment_count.admin_order_field = 'assignment__count'
 
@@ -122,7 +122,7 @@ class CourseAdmin(admin.ModelAdmin):
     raw_id_fields = ['course_tag', 'active_period']
 
     def get_admins(self, course):
-        return u', '.join(unicode(user) for user in course.admins.all())
+        return ', '.join(str(user) for user in course.admins.all())
     get_admins.short_description = 'Admins'
 
     def get_queryset(self, request):
@@ -134,6 +134,7 @@ class CourseAdmin(admin.ModelAdmin):
 
 
 admin.site.register(coremodels.Course, CourseAdmin)
+
 
 # Unregister auth.groups
 admin.site.unregister(Group)
