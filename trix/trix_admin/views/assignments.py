@@ -2,7 +2,7 @@ import re
 from django import forms
 from django.core.exceptions import ValidationError
 from django.core import serializers
-from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.template import defaultfilters
 from django.template.defaultfilters import truncatechars

@@ -31,7 +31,7 @@
                     </a>
                 {% endfor %}
             </div>
-            <div class="trix-div-sort-buttons">
+            <div class="trix-user-sort-button-group">
                 {% for name, order in selectable_sort_list %}
                     <span class="btn trix-sort-button">
                         {% order_in_use order sort_list as is_negative %}
@@ -62,7 +62,7 @@
                 {% endif %}">
             <h3><a href="{% url 'trix_assignments_view' item.assignment.id %}">{{ item.assignment }}</a></h3>
             <p>{% trans "Points" %}: {{ item.assignment.points }}</p>
-            <p>{% trans "Solved" %}: {{ item.howsolved }}</p>
+            <p>{% trans "Solved" %}: {{ item.howsolved | howsolved_to_string }}</p>
             {% for tag in item.assignment.tags.all %}
                 <button class="btn btn-xs disabled">{{ tag }}</button>
             {% endfor %}
