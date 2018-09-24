@@ -1,9 +1,9 @@
 import re
-from django.utils.translation import ugettext_lazy as _
-from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import BaseUserManager
 from django.conf import settings
+from django.db import models
+from django.utils.translation import ugettext_lazy as _
 
 
 class TrixUserManager(BaseUserManager):
@@ -59,18 +59,6 @@ class User(AbstractBaseUser):
         null=True
     )
 
-    experience = models.IntegerField(
-        verbose_name=_('Experience points'),
-        default=0,
-        null=False
-    )
-
-    level = models.IntegerField(
-        verbose_name=_('Level'),
-        default=1,
-        null=False
-    )
-
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
@@ -89,55 +77,6 @@ class User(AbstractBaseUser):
 
     def get_short_name(self):
         return self.displayname
-
-    def change_exp(self, xp):
-        '''
-        Changes experience up or down to a minimum of 0.
-        '''
-        self.experience += xp
-        if (self.experience < 0):
-            self.experience = 0
-        # Check if user has leveled up
-        self.calculate_level()
-
-    def calculate_level(self):
-        '''
-        Calculates the level of the user by going through the level caps in
-        reverse order and finding the first time the experience is larger than the
-        experience required.
-        '''
-        level_caps = settings.LEVEL_CAPS
-        for idx in reversed(range(len(level_caps))):
-            if self.experience >= level_caps[idx]:
-                self.level = idx + 1
-                break
-
-    def current_level_exp(self):
-        """
-        Returns the experience required for the current level.
-        """
-        level_caps = settings.LEVEL_CAPS
-        if self.level - 1 < 0:
-            return level_caps[0]
-        return level_caps[self.level - 1]
-
-    def next_level_exp(self):
-        """
-        Returns the experience required for the next level.
-        """
-        level_caps = settings.LEVEL_CAPS
-        if self.level >= len(level_caps) - 1:
-            return level_caps[len(level_caps) - 1]
-        elif self.level < 0:
-            return level_caps[0]
-        return level_caps[self.level]
-
-    def level_progress(self):
-        """
-        Returns percentage progress towards next level as int at maximum 100.
-        """
-        return min(int(round((self.experience - self.current_level_exp()) /
-                   float(self.next_level_exp() - self.current_level_exp()) * 100)), 100)
 
     @property
     def displayname(self):
@@ -206,6 +145,7 @@ class Tag(models.Model):
             ('', _('No category')),
             ('c', _('Course')),
             ('p', _('Period')),
+            ('s', _('Subject'))
         ]
     )
 
@@ -395,6 +335,21 @@ class HowSolved(models.Model):
 
     def __str__(self):
         return self.howsolved
+
+
+class TagExperience(models.Model):
+    """
+    Holds information about how much experience a user has for a tag.
+    """
+    experience = models.IntegerField(
+        default=0,
+        verbose_name=_('Experience points for this tag')
+    )
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    tag = models.ForeignKey(Tag, on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return "({} - {} - {})".format(self.tag, self.user, self.experience)
 
 
 class Permalink(models.Model):

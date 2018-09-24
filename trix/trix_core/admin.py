@@ -26,8 +26,6 @@ class UserAdmin(admin.ModelAdmin):
         'email',
         'is_admin',
         'last_login',
-        'experience',
-        'level'
     ]
     search_fields = ['email']
     list_filter = [

@@ -1,11 +1,12 @@
 import json
 from django import http
+from django.conf import settings
 from django.views.generic import ListView
 from django.utils.translation import ugettext_lazy as _
+from functools import reduce
 from urllib import parse
 
 from trix.trix_core import models
-from functools import reduce
 
 
 class AssignmentListViewBase(ListView):
@@ -47,13 +48,24 @@ class AssignmentListViewBase(ListView):
         assignments = self.get_queryset()
         if (not self.request.user.is_admin):
             assignments = assignments.exclude(hidden=True)
-        how_solved = models.HowSolved.objects.filter(assignment__in=assignments)\
-            .filter(user=self.request.user.id)
+        how_solved = (models.HowSolved.objects.filter(assignment__in=assignments)
+                      .filter(user=self.request.user.id))
         num_solved = how_solved.count()
         num_total = assignments.count()
-        exp = self.request.user.experience
-        lvl = self.request.user.level
-        lvl_progress = self.request.user.level_progress()
+        # Get all subject tags
+        tags = []
+        for assignment in assignments:
+            tag_query = assignment.tags.filter(category='s')
+            tags.append(list(tag_query))
+        # Flatten list
+        tags = [tag for sublist in tags for tag in sublist]
+        tagexp = (models.TagExperience.objects
+                  .filter(user=self.request.user)
+                  .filter(tag__in=tags))
+        exp = self._get_experience(tagexp)
+        # Calculate level based on tags
+        lvl = self._calculate_level(tagexp, exp)
+        lvl_progress = self._level_progress(exp, lvl)
         if num_total == 0:
             percent = 0
         else:
@@ -75,7 +87,6 @@ class AssignmentListViewBase(ListView):
 
     def _get_selectable_tags(self):
         already_selected_tags = self.get_already_selected_tags() + self.selected_tags
-
         tags = (models.Tag.objects
                 .filter(assignment__in=self.get_queryset())
                 .exclude(tag__in=already_selected_tags)
@@ -114,7 +125,6 @@ class AssignmentListViewBase(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(AssignmentListViewBase, self).get_context_data(**kwargs)
-
         context['non_removeable_tags'] = self.non_removeable_tags
         context['selected_tags'] = self.selected_tags
         context['selectable_tags'] = self.selectable_tags
@@ -128,7 +138,55 @@ class AssignmentListViewBase(ListView):
         context['progresstext'] = _(
             'You have completed {{ solvedPercentage }} percent of assignments matching the '
             'currently selected tags.')
+
+        context['level_explanation_header'] = _('Levels and experience')
+        context['level_explanation_text'] = _('Experience is calculated based on tasks with tags'
+                                              'you have solved. When solving a task you will get '
+                                              'experience on each of the tags that assignment '
+                                              'has.')
         return context
+
+    def _get_experience(self, tags):
+        exp = 0
+        for tag in tags:
+            exp += tag.experience
+        return exp
+
+    def _calculate_level(self, tags, exp):
+        """
+        Calculates the level based on the given TagExperience objects.
+        """
+        level_caps = settings.LEVEL_CAPS
+        for idx in reversed(range(len(level_caps))):
+            if exp >= level_caps[idx]:
+                return idx + 1
+
+    def _current_level_exp(self, level):
+        """
+        Returns the experience required for the given level.
+        """
+        level_caps = settings.LEVEL_CAPS
+        if level - 1 < 0:
+            return level_caps[0]
+        return level_caps[level - 1]
+
+    def _next_level_exp(self, level):
+        """
+        Returns the experience required for the next level.
+        """
+        level_caps = settings.LEVEL_CAPS
+        if level >= len(level_caps) - 1:
+            return level_caps[len(level_caps) - 1]
+        elif level < 0:
+            return level_caps[0]
+        return level_caps[level]
+
+    def _level_progress(self, xp, level):
+        """
+        Returns percentage progress towards next level as int at maximum 100.
+        """
+        return min(int(round((xp - self._current_level_exp(level)) /
+                   float(self._next_level_exp(level) - self._current_level_exp(level)) * 100)), 100)
 
     def _get_user_is_admin(self):
         raise NotImplementedError()

@@ -31,9 +31,12 @@ class HowsolvedView(View):
         return get_object_or_404(models.Assignment, id=self.kwargs['assignment_id'])
 
     def _get_howsolved(self, assignment_id):
-        return models.HowSolved.objects\
-            .filter(assignment_id=assignment_id, user=self.request.user)\
-            .get()
+        return (models.HowSolved.objects
+                .filter(assignment_id=assignment_id, user=self.request.user)
+                .get())
+
+    def _get_tagexperience(self, tag_id):
+        return (models.TagExperience.objects.filter(tag_id=tag_id, user=self.request.user).get())
 
     def post(self, request, **kwargs):
         try:
@@ -47,6 +50,7 @@ class HowsolvedView(View):
         if form.is_valid():
             howsolved = form.cleaned_data['howsolved']
             assignment = self._get_assignment()
+            tags = assignment.tags.filter(category='s')
 
             try:
                 howsolvedobject = self._get_howsolved(assignment.id)
@@ -55,11 +59,22 @@ class HowsolvedView(View):
                     howsolved=howsolved,
                     assignment=assignment,
                     user=request.user)
-                self.request.user.change_exp(assignment.points)
-                self.request.user.save()
             else:
                 howsolvedobject.howsolved = howsolved
                 howsolvedobject.save()
+
+            for tag in tags:
+                try:
+                    tagexpobject = self._get_tagexperience(tag.id)
+                except models.TagExperience.DoesNotExist:
+                    tagexpobject = models.TagExperience.objects.create(
+                        tag=tag,
+                        user=request.user,
+                        experience=assignment.points
+                    )
+                else:
+                    tagexpobject.experience += assignment.points
+                    tagexpobject.save()
 
             return self._200_response({'howsolved': howsolvedobject.howsolved})
         else:
@@ -77,8 +92,16 @@ class HowsolvedView(View):
         else:
             howsolved.delete()
             assignment = self._get_assignment()
-            request.user.change_exp(-assignment.points)
-            if (request.user.experience < 0):
-                request.user.experience = 0
-            request.user.save()
+            tags = assignment.tags.filter(category='s')
+            for tag in tags:
+                try:
+                    tagexp = self._get_tagexperience(tag.id)
+                except models.TagExperience.DoesNotExist:
+                    continue
+                else:
+                    tagexp.experience -= assignment.points
+                    if tagexp.experience <= 0:
+                        tagexp.delete()
+                    else:
+                        tagexp.save()
             return self._200_response({'success': True})

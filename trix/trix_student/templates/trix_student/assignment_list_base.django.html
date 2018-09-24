@@ -14,9 +14,17 @@
                     <div ng-controller="AssignmentListProgressController"
                          class="trix-user-level-progress"
                          ng-cloak>
-                        <p>{% trans "Level" %}
+                        <div class="trix-user-level-text">
+                            <p>{% trans "Level" %}
+                            {% verbatim %}
+                            {{ level }}
+                            {% endverbatim %}
+                            </p>
+                            <a href="#">
+                                <i class="far fa-question-circle"></i>
+                            </a>
+                        </div>
                         {% verbatim %}
-                        {{ level }}</p>
                         <div class="progress">
                             <div class="progress-bar bg-success"
                                  role="progressbar"
