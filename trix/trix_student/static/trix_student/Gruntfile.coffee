@@ -31,7 +31,9 @@ module.exports = (grunt) ->
     ]
     js: [
       'bower_components/angular/angular.min.js'
+      'bower_components/angular/angular.min.js.map'
       'bower_components/angular-cookies/angular-cookies.min.js'
+      'bower_components/angular-cookies/angular-cookies.min.js.map'
       'bower_components/angular-route/angular-route.min.js'
       'bower_components/angular-route/angular-route.min.js.map'
       'bower_components/jsurl/url.min.js'

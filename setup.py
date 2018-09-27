@@ -27,7 +27,6 @@ setup(
         'cradmin_legacy>=1.3.0a0',
         'gunicorn',
         'unicodecsv>=0.14.1',
-        'dj-static>=0.0.6'
     ],
     classifiers=[
         'Development Status :: 4 - Beta',
