@@ -76,7 +76,7 @@ USE_TZ = True
 
 # Setup static files to be served at /s/.
 # - Gives us short urls for angular apps (I.E.: /s/v1/).
-STATIC_URL = '/staticfiles/'
+STATIC_URL = '/static/'
 
 # Custom authentication model
 AUTH_USER_MODEL = 'trix_core.User'
