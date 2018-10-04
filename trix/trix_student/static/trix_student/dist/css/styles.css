@@ -9108,11 +9108,13 @@ fieldset[disabled] .btn-trix-admin.active {
 .trix-assignment-list {
   margin-left: -15px;
   margin-right: 25px;
+  width: 70%;
 }
 @media (max-width: 768px) {
   .trix-assignment-list {
     margin-left: 0;
     margin-right: 0;
+    width: 100%;
   }
 }
 @media (min-width: 768px) {
@@ -9122,6 +9124,7 @@ fieldset[disabled] .btn-trix-admin.active {
     align-self: flex-start;
     top: 20px;
     margin-bottom: 50px;
+    width: 25%;
   }
 }
 #assignments-taggingbox .assignments-progressbox {
