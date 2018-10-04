@@ -35,8 +35,6 @@ ALLOWED_HOSTS = ['*']
 
 # Static asset configuration for heroku
 STATIC_ROOT = 'static'
-STATIC_URL = '/static/'
-
 
 # HAYSTACK_CONNECTIONS = {
 #     'default': {
