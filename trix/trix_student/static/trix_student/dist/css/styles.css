@@ -9041,7 +9041,7 @@ fieldset[disabled] .btn-trix-admin.active {
 @media (min-width: 768px) {
   .trix-assignment {
     margin-top: 0;
-    margin-bottom: 80px;
+    margin-bottom: 60px;
   }
 }
 .trix-assignment.trix-assignment-notsolved {
@@ -9088,11 +9088,41 @@ fieldset[disabled] .btn-trix-admin.active {
 .trix-border-easy {
   border: 1px solid rgba(0, 255, 0, 0.5);
 }
-.trix-border-medium {
+.trix-border-med {
   border: 1px solid rgba(255, 255, 0, 0.5);
 }
 .trix-border-hard {
   border: 1px solid rgba(255, 0, 0, 0.5);
+}
+.trix-assignment-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: row-reverse;
+}
+@media (max-width: 768px) {
+  .trix-assignment-container {
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+}
+.trix-assignment-list {
+  margin-left: -15px;
+  margin-right: 25px;
+}
+@media (max-width: 768px) {
+  .trix-assignment-list {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+@media (min-width: 768px) {
+  .trix-sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    align-self: flex-start;
+    top: 20px;
+    margin-bottom: 50px;
+  }
 }
 #assignments-taggingbox .assignments-progressbox {
   min-height: 80px;
@@ -9150,7 +9180,7 @@ fieldset[disabled] .btn-trix-admin.active {
   margin: 0;
   padding: 0;
 }
-@media (min-width: 992px) {
+@media (min-width: 1199px) {
   .trix-menuicon {
     display: block !important;
     text-align: center;
@@ -9224,7 +9254,7 @@ fieldset[disabled] .btn-trix-admin.active {
   align-items: center;
   border-top: 1px dashed #ccc;
 }
-@media (max-width: 992px) {
+@media (max-width: 991px) {
   .trix-div-sort-buttons {
     display: block;
   }
@@ -9251,7 +9281,7 @@ fieldset[disabled] .btn-trix-admin.active {
   padding-top: 2px;
   margin: 0;
 }
-@media (max-width: 992px) {
+@media (max-width: 991px) {
   .trix-sort-button {
     width: 100%;
   }
@@ -9283,7 +9313,7 @@ fieldset[disabled] .btn-trix-admin.active {
   border-right: 1px solid #ccc;
   background-color: transparent !important;
 }
-@media (max-width: 992px) {
+@media (max-width: 991px) {
   .assignment-info > span {
     display: block;
   }
@@ -9300,7 +9330,7 @@ fieldset[disabled] .btn-trix-admin.active {
   opacity: 0.65;
   margin-bottom: 0;
 }
-@media (max-width: 992px) {
+@media (max-width: 991px) {
   .trix-date-container > form > div {
     padding-right: 5px;
   }
@@ -9371,7 +9401,7 @@ body {
   width: 65%;
   margin-top: 40px;
 }
-@media (max-width: 992px) {
+@media (max-width: 991px) {
   .trix-roleselect .cradmin-legacy-focusedpage-wrapper {
     width: 100%;
   }
@@ -9379,7 +9409,7 @@ body {
 .trix-roleselect-container {
   width: 66%;
 }
-@media (max-width: 992px) {
+@media (max-width: 991px) {
   .trix-roleselect-container {
     width: 100%;
   }
@@ -9543,7 +9573,7 @@ body {
 .trix-focusfield .controls .textinput,
 .trix-focusfield .controls .textarea,
 .trix-focusfield .controls .select,
-.trix-focusfield #id_points {
+.trix-focusfield #id_base_points {
   max-width: 60%;
   border-right: 1px dashed #ccc;
   border: none;
@@ -9556,11 +9586,11 @@ body {
   font-size: 24px;
   text-align: left;
 }
-@media (max-width: 992px) {
+@media (max-width: 991px) {
   .trix-focusfield .controls .textinput,
   .trix-focusfield .controls .textarea,
   .trix-focusfield .controls .select,
-  .trix-focusfield #id_points {
+  .trix-focusfield #id_base_points {
     max-width: 100%;
     border-right: none;
   }
@@ -9569,7 +9599,7 @@ body {
   font-size: 16px;
 }
 .trix-focusfield .controls .select,
-.trix-focusfield #id_points {
+.trix-focusfield #id_base_points {
   padding: 10px 0px 10px 50px;
   font-size: 16px;
 }
@@ -9586,7 +9616,7 @@ body {
   border-right: 1px dashed #ccc;
   padding: 20px 50px 40px 50px;
 }
-@media (max-width: 992px) {
+@media (max-width: 991px) {
   .cradmin-div-styled-as-textarea {
     width: 100%;
     border-right: none;
@@ -9601,7 +9631,7 @@ body {
   text-align: left;
   margin: 20px 10px;
 }
-@media (max-width: 992px) {
+@media (max-width: 991px) {
   .controls .help-block {
     display: none;
   }
@@ -9636,7 +9666,7 @@ body {
 .cradmin_legacy_submitrow .form-control {
   margin: 5px 15px 10px 15px;
 }
-@media (max-width: 992px) {
+@media (max-width: 1199px) {
   .cradmin_legacy_submitrow {
     left: 0;
     right: 0;
@@ -9701,9 +9731,8 @@ body {
     border-bottom: 1px solid #aaa;
   }
   .trix-assignment {
-    background-color: white;
-    padding: 0;
-    border-bottom: 1px solid #bbb;
+    background-color: transparent;
+    padding: 10;
   }
   .assignment-tags > button {
     border: 0;
@@ -9777,7 +9806,7 @@ body {
   display: flex;
   align-items: center;
 }
-@media (max-width: 720px) {
+@media (max-width: 767px) {
   .trix-user-sort-button-group {
     display: block;
   }
@@ -9799,7 +9828,7 @@ body {
   margin-right: auto;
   text-align: center;
 }
-@media (max-width: 992px) {
+@media (max-width: 1199px) {
   .trix-consent-btn {
     width: 90%;
   }

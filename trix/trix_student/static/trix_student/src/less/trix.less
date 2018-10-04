@@ -23,7 +23,7 @@ body {
     width: 65%;
     margin-top: 40px;
 
-    @media(max-width: 992px) {
+    @media(max-width: @screen-sm-max) {
         width: 100%;
     }
 }
@@ -31,7 +31,7 @@ body {
 .trix-roleselect-container {
     width: 66%;
 
-    @media(max-width: 992px) {
+    @media(max-width: @screen-sm-max) {
         width: 100%;
     }
 }
@@ -228,7 +228,7 @@ body {
     .controls .textinput,
     .controls .textarea,
     .controls .select,
-    #id_points {
+    #id_base_points {
         max-width: 60%;
         border-right: 1px dashed #ccc;
         border: none;
@@ -241,7 +241,7 @@ body {
         font-size: 24px;
         text-align: left;
 
-        @media(max-width: 992px) {
+        @media(max-width: @screen-sm-max) {
             max-width: 100%;
             border-right: none;
         }
@@ -252,7 +252,7 @@ body {
     }
 
     .controls .select,
-    #id_points {
+    #id_base_points {
         padding: 10px 0px 10px 50px;
         font-size: @font-size-base;
     }
@@ -273,7 +273,7 @@ body {
     border-right: 1px dashed #ccc;
     padding: 20px 50px 40px 50px;
 
-    @media(max-width: 992px) {
+    @media(max-width: @screen-sm-max) {
         width: 100%;
         border-right: none;
     }
@@ -289,7 +289,7 @@ body {
     text-align: left;
     margin: 20px 10px;
 
-    @media(max-width: 992px) {
+    @media(max-width: @screen-sm-max) {
         display: none;
     }
 }
@@ -328,7 +328,7 @@ body {
         margin: 5px 15px 10px 15px;
     }
 
-    @media (max-width: 992px) {
+    @media (max-width: @screen-md-max) {
         left: 0;
         right: 0;
 

@@ -1,10 +1,8 @@
 {% load i18n %}
 {% load trix_core_tags %}
 
-<section class="trix-assignment {% if assignment.hidden %}trix-assignment-hidden{% endif %}
-        {% if assignment.points <= 10 %}trix-border-easy
-        {% elif assignment.points <= 20 %}trix-border-medium
-        {% else %}trix-border-hard{% endif %}"
+<section class="trix-assignment {% if assignment.hidden %}trix-assignment-hidden trix-no-print{% endif %}
+        trix-border-{{ assignment.difficulty }}"
         ng-controller="AssignmentCtrl"
         ng-class="boxClass"
         ng-init="

@@ -20,9 +20,9 @@
     border-radius: 4px;
     font-size: @trix-article-font-size;
 
-    @media (min-width: @screen-sm-min) {
+    @media (min-width: @screen-sm) {
         margin-top: 0;
-        margin-bottom: 80px;
+        margin-bottom: 60px;
     }
 
     &.trix-assignment-notsolved {
@@ -82,19 +82,50 @@
 }
 
 @trix-level-easy: rgba(0, 255, 0, 0.5);
-@trix-level-medium: rgba(255, 255, 0, 0.5);
+@trix-level-med: rgba(255, 255, 0, 0.5);
 @trix-level-hard: rgba(255, 0, 0, 0.5);
 
 .trix-border-easy {
     border: 1px solid @trix-level-easy;
 }
 
-.trix-border-medium {
-    border: 1px solid @trix-level-medium;
+.trix-border-med {
+    border: 1px solid @trix-level-med;
 }
 
 .trix-border-hard {
     border: 1px solid @trix-level-hard;
+}
+
+.trix-assignment-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: row-reverse;
+
+    @media(max-width: @screen-sm) {
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+}
+
+.trix-assignment-list {
+    margin-left: -15px;
+    margin-right: 25px;
+
+    @media(max-width: @screen-sm) {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
+.trix-sticky {
+    @media(min-width: @screen-sm) {
+        position: -webkit-sticky;
+        position: sticky;
+        align-self: flex-start;
+        top: 20px;
+        margin-bottom: 50px;
+    }
 }
 
 #assignments-taggingbox {

@@ -276,9 +276,21 @@ class Assignment(models.Model):
         default=False,
         verbose_name=_('Hide assignment from students'))
 
-    points = models.IntegerField(
+    base_points = models.IntegerField(
         default=10,
-        verbose_name=_('Point value')
+        verbose_name=_('Experience points'),
+        help_text=_('How much experience each subject tag on this assignment is worth.')
+    )
+
+    difficulty = models.CharField(
+        max_length=4,
+        null=False,
+        default='easy',
+        choices=[
+            ('easy', _('Easy')),
+            ('med', _('Medium')),
+            ('hard', _('Hard'))
+        ]
     )
 
     objects = AssignmentManager()
@@ -310,6 +322,11 @@ class Assignment(models.Model):
         # NOTE: Without this, the YAML output for bulk editing becomes unreadable
         self.text = self._normalize_text(self.text)
         self.solution = self._normalize_text(self.solution)
+
+    @property
+    def points(self):
+        tags = self.tags.filter(category='s')
+        return len(tags) * self.base_points
 
 
 class HowSolved(models.Model):

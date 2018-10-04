@@ -50,31 +50,33 @@ class HowsolvedView(View):
         if form.is_valid():
             howsolved = form.cleaned_data['howsolved']
             assignment = self._get_assignment()
-            tags = assignment.tags.filter(category='s')
 
             try:
                 howsolvedobject = self._get_howsolved(assignment.id)
             except models.HowSolved.DoesNotExist:
+                # Create a new HowSolved object
                 howsolvedobject = models.HowSolved.objects.create(
                     howsolved=howsolved,
                     assignment=assignment,
                     user=request.user)
+                # The assignment has not been solved, add experience to tags
+                tags = assignment.tags.filter(category='s')
+                for tag in tags:
+                    try:
+                        tagexpobject = self._get_tagexperience(tag.id)
+                    except models.TagExperience.DoesNotExist:
+                        tagexpobject = models.TagExperience.objects.create(
+                            tag=tag,
+                            user=request.user,
+                            experience=assignment.base_points
+                        )
+                        tagexpobject.save()
+                    else:
+                        tagexpobject.experience += assignment.base_points
+                        tagexpobject.save()
             else:
                 howsolvedobject.howsolved = howsolved
                 howsolvedobject.save()
-
-            for tag in tags:
-                try:
-                    tagexpobject = self._get_tagexperience(tag.id)
-                except models.TagExperience.DoesNotExist:
-                    tagexpobject = models.TagExperience.objects.create(
-                        tag=tag,
-                        user=request.user,
-                        experience=assignment.points
-                    )
-                else:
-                    tagexpobject.experience += assignment.points
-                    tagexpobject.save()
 
             return self._200_response({'howsolved': howsolvedobject.howsolved})
         else:
@@ -99,7 +101,7 @@ class HowsolvedView(View):
                 except models.TagExperience.DoesNotExist:
                     continue
                 else:
-                    tagexp.experience -= assignment.points
+                    tagexp.experience -= assignment.base_points
                     if tagexp.experience <= 0:
                         tagexp.delete()
                     else:

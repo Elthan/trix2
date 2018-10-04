@@ -185,8 +185,12 @@ class AssignmentListViewBase(ListView):
         """
         Returns percentage progress towards next level as int at maximum 100.
         """
-        return min(int(round((xp - self._current_level_exp(level)) /
-                   float(self._next_level_exp(level) - self._current_level_exp(level)) * 100)), 100)
+        base_lvl_xp = self._current_level_exp(level)  # XP needed to reach the current level
+        next_lvl_xp = float(self._next_level_exp(level) -
+                            self._current_level_exp(level))  # XP needed to reach the next level
+        progress_lvl = xp - base_lvl_xp  # XP progress towards next level from current level
+        percentage = round((progress_lvl / next_lvl_xp) * 100)  # Get the percentage and round it
+        return min(int(percentage), 100)  # Return as it and at maximum 100 percent
 
     def _get_user_is_admin(self):
         raise NotImplementedError()

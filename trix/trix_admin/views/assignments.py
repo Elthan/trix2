@@ -165,7 +165,8 @@ class AssignmentCreateUpdateMixin(object):
         return [
             layout.Div('title', css_class="trix-focusfield"),
             layout.Div('tags', css_class="trix-focusfield"),
-            layout.Div('points', css_class="trix-focusfield"),
+            layout.Div('base_points', css_class="trix-focusfield"),
+            layout.Div('difficulty', css_class="trix-focusfield"),
             layout.Div('hidden', css_class="trix-focusfield"),
             layout.Div('text', css_class="trix-focusfield"),
             layout.Div('solution', css_class="trix-focusfield"),

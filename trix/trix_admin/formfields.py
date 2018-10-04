@@ -7,7 +7,7 @@ class ManyToManyTagInputField(forms.CharField):
 
     def prepare_value(self, value):
         if value:
-            if isinstance(value, str):
+            if isinstance(value, unicode):
                 tags = self.to_python(value)
                 return ', '.join([tag.tag for tag in tags])
             else:
