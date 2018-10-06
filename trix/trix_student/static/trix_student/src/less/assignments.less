@@ -19,6 +19,9 @@
     padding: 20px;
     border-radius: 4px;
     font-size: @trix-article-font-size;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
 
     @media (min-width: @screen-sm) {
         margin-top: 0;
@@ -38,23 +41,71 @@
     &>h2 {
         margin-top: 0;
         padding-top: 0;
+        order: 0;
+        max-width: 70%;
+        flex: 1 0 70%;
+    }
+
+    .trix-assignment-overlap {
+        order: 1;
+        align-self: flex-start;
+        flex: 0 0 15%;
+
+        .trix-assignment-edit {
+            width: auto;
+            align-self: flex-start;
+            margin-left: auto;
+        }
+
+        .trix-assignment-difficulty {
+            width: auto;
+            margin-left: auto;
+            text-align: right;
+            opacity: 0.5;
+        }
+    }
+
+    .assignment-tags {
+        align-self: flex-start;
+        width: auto;
+        order: 3;
+        padding-left: 0;
+        flex: 0 0 70%;
+    }
+
+    .trix-assignment-points {
+        color: #555;
+        font-size: 16px;
+        width: auto;
+        order: 4;
+        margin-left: auto;
+        text-align: right;
+        flex: 0 0 30%;
     }
 
     .trix-assignmenttext {
         margin-top: 40px;
+        order: 5;
+        width: 100%;
     }
 
     .trix-assignmenthowsolved {
+        order: 6;
         .trix-assignmenthowsolvedsaving {
             display: inline-block;
             margin-left: 10px;
         }
     }
+
     .trix-assignmentsolution {
+        order: 7;
         margin-top: 20px;
+        width: 100%;
+
         .trix-assignmentsolutionexpander {
             cursor: pointer;
         }
+
         .trix-markdownarticle {
             background-color: #fff;
             padding: 20px;
@@ -62,23 +113,16 @@
             border: 1px solid #eee;
         }
     }
-}
 
-.trix-assignment-hidden {
-    background: repeating-linear-gradient(
-      -45deg,
-      #ccc,
-      #ccc 1px,
-      transparent 1px,
-      transparent 60px
-    );
-}
-
-.trix-assignment-points {
-    color: #555;
-    font-size: 16px;
-    width: auto;
-    float: right;
+    .trix-assignment-hidden {
+        background: repeating-linear-gradient(
+            -45deg,
+            #ccc,
+            #ccc 1px,
+            transparent 1px,
+            transparent 60px
+            );
+    }
 }
 
 @trix-level-easy: rgba(0, 255, 0, 0.5);

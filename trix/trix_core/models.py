@@ -133,19 +133,17 @@ class Tag(models.Model):
     # NOTE: Help and field size in UI must make users use short tags
     tag = models.CharField(
         unique=True,
-        max_length=30)
+        max_length=30
+    )
 
+    CATEGORIES = [('', _('No category')), ('c', _('Course')),
+                  ('p', _('Period')), ('s', _('Subject'))]
     category = models.CharField(
         max_length=1,
         blank=True,
         null=False,
         default='',
-        choices=[
-            ('', _('No category')),
-            ('c', _('Course')),
-            ('p', _('Period')),
-            ('s', _('Subject'))
-        ]
+        choices=CATEGORIES,
     )
 
     class Meta:
@@ -179,6 +177,23 @@ class Tag(models.Model):
             return [
                 cls.normalize_tag(tagstring)
                 for tagstring in list([_f for _f in re.split('[,\s]', commaseparatedtags) if _f])]
+
+    @classmethod
+    def extract_category(cls, tag):
+        """
+        Finds and removes the brackets from a tag,
+        returning the tag without the brackets and the
+        category if found and valid.
+        """
+        category = ''
+        if "[" and "]" in tag:
+            category = tag[tag.index("["):]
+            category = category.lstrip("[").rstrip("]")
+            tag = tag[:tag.index("[")]
+            # Check that the category for the tag exists
+            if category not in [c[0] for c in cls.CATEGORIES]:
+                category = ''
+        return tag, category
 
 
 class Course(models.Model):
@@ -282,15 +297,12 @@ class Assignment(models.Model):
         help_text=_('How much experience each subject tag on this assignment is worth.')
     )
 
+    DIFFICULTIES = [('easy', _('Easy')), ('med', _('Medium')), ('hard', _('Hard'))]
     difficulty = models.CharField(
         max_length=4,
         null=False,
         default='easy',
-        choices=[
-            ('easy', _('Easy')),
-            ('med', _('Medium')),
-            ('hard', _('Hard'))
-        ]
+        choices=DIFFICULTIES
     )
 
     objects = AssignmentManager()

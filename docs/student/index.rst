@@ -6,3 +6,4 @@ Student docs
    :maxdepth: 2
 
    gettingstarted
+   experience

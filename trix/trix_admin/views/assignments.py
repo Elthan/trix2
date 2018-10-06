@@ -21,9 +21,10 @@ from trix.trix_admin import formfields
 
 
 def validate_single_tag(value):
-    if not re.match(r'^(\w|[-])+$', value, re.UNICODE):
+    if not re.match(r'^(\w|[-\[\]])+$', value, re.UNICODE):
         raise ValidationError(_('Tags can only contain letters, numbers, underscore (_)'
-                                'and hyphen (-).'))
+                                'and hyphen (-). Add tag category by using brackets, '
+                                'example: [s] for subject category.'))
 
 
 class TitleColumn(objecttable.MultiActionColumn):
@@ -293,8 +294,9 @@ class AssignmentMultiAddTagView(AssignmentQuerysetForRoleMixin, multiselect.Mult
         tag = trix_models.Tag.normalize_tag(form.cleaned_data['tag'])
         for assignment in assignments:
             if not assignment.tags.filter(tag=tag).exists():
-                object, created = trix_models.Tag.objects.get_or_create(tag=tag,
-                                                                        defaults={'category': ''})
+                tag, category = trix_models.Tag.extract_category(tag)
+                object, created = trix_models.Tag.objects.get_or_create(
+                    tag=tag, defaults={'category': category})
                 assignment.tags.add(object)
 
         return HttpResponseRedirect(self.request.cradmin_app.reverse_appindexurl())

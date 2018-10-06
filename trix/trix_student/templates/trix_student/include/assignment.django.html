@@ -9,13 +9,18 @@
             assignment_id='{{ assignment.id }}';
             howsolved='{{ howsolved }}';
         ">
-    {% if user_is_admin and course.id %}
-        <a href="{% url 'trix_courseadmin-assignments-edit' course.id assignment.id %}?{{ urlencoded_success_url }}"
-                class="btn btn-trix-admin pull-right trix-no-print">
-            <span class="fa fa-edit"></span>
-            {% trans "Edit" %}
-        </a>
-    {% endif %}
+    <div class="trix-assignment-overlap">
+        {% if user_is_admin and course.id %}
+            <a href="{% url 'trix_courseadmin-assignments-edit' course.id assignment.id %}?{{ urlencoded_success_url }}"
+                    class="btn btn-trix-admin pull-right trix-no-print trix-assignment-edit">
+                <span class="fa fa-edit"></span>
+                {% trans "Edit" %}
+            </a>
+        {% endif %}
+        <div class="trix-assignment-difficulty">
+            <p>{{ assignment.get_difficulty_display }}</p>
+        </div>
+    </div>
     <h2 id="assignment-{{ assignment.id }}">
         <a href="{% url 'trix_assignments_view' assignment.id %}" style="color:black;">
             {{ assignment }}
@@ -24,11 +29,9 @@
             <span class="fa fa-eye-slash" style="font-size: 24px;" title="{% trans 'Hidden assignment' %}"></span>
         {% endif %}
     </h2>
-
     <div class="trix-assignment-points">
         <p>{{ assignment.points }} {% trans "points" %}</p>
     </div>
-
     {% if not disable_tags %}
         <div class="assignment-tags">
             {% for tag in assignment.tags.all %}

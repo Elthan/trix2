@@ -9037,6 +9037,9 @@ fieldset[disabled] .btn-trix-admin.active {
   padding: 20px;
   border-radius: 4px;
   font-size: 18px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
 }
 @media (min-width: 768px) {
   .trix-assignment {
@@ -9056,16 +9059,58 @@ fieldset[disabled] .btn-trix-admin.active {
 .trix-assignment > h2 {
   margin-top: 0;
   padding-top: 0;
+  order: 0;
+  max-width: 70%;
+  flex: 1 0 70%;
+}
+.trix-assignment .trix-assignment-overlap {
+  order: 1;
+  align-self: flex-start;
+  flex: 0 0 15%;
+}
+.trix-assignment .trix-assignment-overlap .trix-assignment-edit {
+  width: auto;
+  align-self: flex-start;
+  margin-left: auto;
+}
+.trix-assignment .trix-assignment-overlap .trix-assignment-difficulty {
+  width: auto;
+  margin-left: auto;
+  text-align: right;
+  opacity: 0.5;
+}
+.trix-assignment .assignment-tags {
+  align-self: flex-start;
+  width: auto;
+  order: 3;
+  padding-left: 0;
+  flex: 0 0 70%;
+}
+.trix-assignment .trix-assignment-points {
+  color: #555;
+  font-size: 16px;
+  width: auto;
+  order: 4;
+  margin-left: auto;
+  text-align: right;
+  flex: 0 0 30%;
 }
 .trix-assignment .trix-assignmenttext {
   margin-top: 40px;
+  order: 5;
+  width: 100%;
+}
+.trix-assignment .trix-assignmenthowsolved {
+  order: 6;
 }
 .trix-assignment .trix-assignmenthowsolved .trix-assignmenthowsolvedsaving {
   display: inline-block;
   margin-left: 10px;
 }
 .trix-assignment .trix-assignmentsolution {
+  order: 7;
   margin-top: 20px;
+  width: 100%;
 }
 .trix-assignment .trix-assignmentsolution .trix-assignmentsolutionexpander {
   cursor: pointer;
@@ -9076,14 +9121,8 @@ fieldset[disabled] .btn-trix-admin.active {
   margin-top: 5px;
   border: 1px solid #eee;
 }
-.trix-assignment-hidden {
+.trix-assignment .trix-assignment-hidden {
   background: repeating-linear-gradient(-45deg, #ccc, #ccc 1px, transparent 1px, transparent 60px);
-}
-.trix-assignment-points {
-  color: #555;
-  font-size: 16px;
-  width: auto;
-  float: right;
 }
 .trix-border-easy {
   border: 1px solid rgba(0, 255, 0, 0.5);
