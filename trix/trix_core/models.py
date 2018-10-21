@@ -297,7 +297,7 @@ class Assignment(models.Model):
         help_text=_('How much experience each subject tag on this assignment is worth.')
     )
 
-    DIFFICULTIES = [('easy', _('Easy')), ('med', _('Medium')), ('hard', _('Hard'))]
+    DIFFICULTIES = [('0', _('Easy')), ('1', _('Medium')), ('2', _('Hard'))]
     difficulty = models.CharField(
         max_length=4,
         null=False,
@@ -360,6 +360,9 @@ class HowSolved(models.Model):
         verbose_name=_('Solved'),
         auto_now=True
     )
+
+    class Meta:
+        ordering = ['solved_datetime']
 
     def __str__(self):
         return self.howsolved

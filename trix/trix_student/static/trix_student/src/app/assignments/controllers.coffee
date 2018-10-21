@@ -1,4 +1,4 @@
-angular.module('trixStudent.assignments.controllers', ['ngRoute'])
+angular.module('trixStudent.assignments.controllers', ['ngRoute', 'ngSanitize'])
 
 .controller('AddTagCtrl', [
   '$scope', '$window',
@@ -109,6 +109,7 @@ angular.module('trixStudent.assignments.controllers', ['ngRoute'])
   '$scope', '$http', '$rootScope',
   ($scope, $http, $rootScope) ->
     $scope.loading = true
+    $scope.hideProgress = false
     apiUrl = new Url()
     apiUrl.query.progressjson = '1'
 
@@ -119,6 +120,10 @@ angular.module('trixStudent.assignments.controllers', ['ngRoute'])
           $scope.loading = false
           $scope.solvedPercentage = response.data.percent
           $scope.experience = response.data.experience
+          # Call for reloading assignments if user leveled up or down
+          console.log response.data
+          if response.data.lvl_up
+              $rootScope.$emit('assignmentList.updateList')
           $scope.level = response.data.level
           $scope.level_progress = response.data.level_progress
           if $scope.solvedPercentage > 1 and $scope.solvedPercentage < 20
@@ -135,4 +140,21 @@ angular.module('trixStudent.assignments.controllers', ['ngRoute'])
     unbindProgressChanged = $rootScope.$on 'assignments.progressChanged', ->
       $scope._loadProgress()
     $scope.$on('$destroy', unbindProgressChanged)
+    unbindProgressHide = $rootScope.$on 'assignments.hideProgress', ->
+      $scope.hideProgress = true
+    $scope.$on('$destroy', unbindProgressHide)
+    unbindProgressShow = $rootScope.$on 'assignments.showProgress', ->
+      $scope.hideProgress = false
+    $scope.$on('$destroy', unbindProgressShow)
+])
+
+.controller('AssignmentListController', [
+  '$scope', '$http', '$rootScope',
+  ($scope, $http, $rootScope) ->
+    apiUrl = new Url()
+    $scope._reloadAssignmentList = ->
+        $scope.updateAssignmentList = {}
+    unbindAssignmentListChanged = $rootScope.$on 'assignmentList.updateList', ->
+        $scope._reloadAssignmentList()
+    $scope.$on('$destroy', unbindAssignmentListChanged)
 ])

@@ -37,6 +37,8 @@ module.exports = (grunt) ->
       'bower_components/angular-route/angular-route.min.js'
       'bower_components/angular-route/angular-route.min.js.map'
       'bower_components/angular-bootstrap/ui-bootstrap.min.js'
+      'bower_components/angular-sanitize/angular-sanitize.min.js'
+      'bower_components/angular-sanitize/angular-sanitize.min.js.map'
       'bower_components/bootstrap/dist/js/bootstrap.min.js'
       'bower_components/jsurl/url.min.js'
       'bower_components/eonasdan-bootstrap-datetimepicker/build' +

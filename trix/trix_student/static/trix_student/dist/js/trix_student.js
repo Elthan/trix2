@@ -1,5 +1,5 @@
 (function() {
-  angular.module('trixStudent', ['ngCookies', 'ngRoute', 'ui.bootstrap', 'trixStudent.directives', 'trixStudent.assignments.controllers']).config([
+  angular.module('trixStudent', ['ngCookies', 'ngRoute', 'ngSanitize', 'ui.bootstrap', 'trixStudent.directives', 'trixStudent.assignments.controllers']).config([
     '$httpProvider',
     function($httpProvider) {
       $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
@@ -17,7 +17,7 @@
 }).call(this);
 
 (function() {
-  angular.module('trixStudent.assignments.controllers', ['ngRoute']).controller('AddTagCtrl', [
+  angular.module('trixStudent.assignments.controllers', ['ngRoute', 'ngSanitize']).controller('AddTagCtrl', [
     '$scope',
     '$window',
     function($scope,
@@ -147,8 +147,11 @@
     $http,
     $rootScope) {
       var apiUrl,
-    unbindProgressChanged;
+    unbindProgressChanged,
+    unbindProgressHide,
+    unbindProgressShow;
       $scope.loading = true;
+      $scope.hideProgress = false;
       apiUrl = new Url();
       apiUrl.query.progressjson = '1';
       $scope._loadProgress = function() {
@@ -157,6 +160,11 @@
           $scope.loading = false;
           $scope.solvedPercentage = response.data.percent;
           $scope.experience = response.data.experience;
+          // Call for reloading assignments if user leveled up or down
+          console.log(response.data);
+          if (response.data.lvl_up) {
+            $rootScope.$emit('assignmentList.updateList');
+          }
           $scope.level = response.data.level;
           $scope.level_progress = response.data.level_progress;
           if ($scope.solvedPercentage > 1 && $scope.solvedPercentage < 20) {
@@ -177,8 +185,40 @@
     function() {
         return $scope._loadProgress();
       });
-      return $scope.$on('$destroy',
+      $scope.$on('$destroy',
     unbindProgressChanged);
+      unbindProgressHide = $rootScope.$on('assignments.hideProgress',
+    function() {
+        return $scope.hideProgress = true;
+      });
+      $scope.$on('$destroy',
+    unbindProgressHide);
+      unbindProgressShow = $rootScope.$on('assignments.showProgress',
+    function() {
+        return $scope.hideProgress = false;
+      });
+      return $scope.$on('$destroy',
+    unbindProgressShow);
+    }
+  ]).controller('AssignmentListController', [
+    '$scope',
+    '$http',
+    '$rootScope',
+    function($scope,
+    $http,
+    $rootScope) {
+      var apiUrl,
+    unbindAssignmentListChanged;
+      apiUrl = new Url();
+      $scope._reloadAssignmentList = function() {
+        return $scope.updateAssignmentList = {};
+      };
+      unbindAssignmentListChanged = $rootScope.$on('assignmentList.updateList',
+    function() {
+        return $scope._reloadAssignmentList();
+      });
+      return $scope.$on('$destroy',
+    unbindAssignmentListChanged);
     }
   ]);
 
@@ -204,6 +244,38 @@
         updateAriaChecked();
         scope.$watch(attrs.trixAriaChecked, function(newValue, oldValue) {
           return updateAriaChecked();
+        });
+      }
+    };
+  }).directive('trixAssignmentList', function($http, $rootScope, $compile) {
+    return {
+      restrict: 'E',
+      replace: true,
+      link: function(scope, element, attrs) {
+        var updateAssignments;
+        updateAssignments = function() {
+          var url;
+          url = new Url();
+          url.query.updatelist = 1;
+          if (scope.no_filter != null) {
+            url.query.no_filter = 1;
+          }
+          return $http.get(url.toString()).then(function(response) {
+            var compiled;
+            if (response.headers('hide-progress')) {
+              $rootScope.$emit('assignments.hideProgress');
+            } else {
+              $rootScope.$emit('assignments.showProgress');
+            }
+            compiled = $compile(response.data)(scope);
+            element.empty();
+            return element.append(compiled);
+          }).catch(function(response) {
+            return console.error('Failed to get list.');
+          });
+        };
+        scope.$watch('updateAssignmentList', function() {
+          return updateAssignments();
         });
       }
     };

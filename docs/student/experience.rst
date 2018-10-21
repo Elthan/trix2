@@ -29,3 +29,5 @@ There are 3 difficulty levels:
     * Easy
     * Medium
     * Hard
+
+As you progress you will be faced with more difficult assignments.

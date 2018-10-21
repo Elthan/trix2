@@ -1,5 +1,8 @@
 {% extends 'trix_student/base.django.html' %}
 {% load i18n %}
+{% load trix_core_tags %}
+{% load trix_admin_tags %}
+{% load cradmin_legacy_tags %}
 
 {% block not_signed_in_warning %}{% endblock %}
 
@@ -39,23 +42,24 @@
                     <div ng-controller="AssignmentListProgressController"
                          class="trix-user-level-progress"
                          ng-cloak>
-                         <p>{% trans "Level" %}: {{ user.level }}</p>
+                         <p>{% trans "Level" %}: {{ level }}</p>
                          <div class="progress">
                             <div class="progress-bar bg-success"
                                  role="progressbar"
-                                 aria-valuenow="{{ user.level_progress }}"
+                                 aria-valuenow="{{ level_progress }}"
                                  aria-valuemin="0"
                                  aria-valuemax="100"
-                                 style="width: {{ user.level_progress }}%;">
-                                {{ user.experience }}
+                                 style="width: {{ level_progress }}%; color: #ccc;">
+                                {{ experience }}xp
                             </div>
                         </div>
                     </div>
                 </li>
                 <li>
-                    <a href="{% url 'trix_user_statistics' %}">
-                        <h3>{% trans "Statistics" %}</h3>
-                    </a>
+                    <h3>{% trans "Statistics" %}</h3>
+                    <p>{% trans "Solved tasks" %}: {{ solved_assignments | length }}</p>
+                    <p>{% trans "By myself" %}: {{ bymyself_assignments | length }} </p>
+                    <p>{% trans "With help" %}: {{ withhelp_assignments | length }}</p>
                 </li>
             </ul>
         </div>
@@ -65,6 +69,61 @@
                 {% trans "DELETE ME" %}
             </a>
         </div>
+    </div>
+</div>
+<div class="container trix-user-assignments-container">
+    <div>
+        <h1>{% trans "Solved assignments" %}</h1>
+        <div>
+            {% for tag in selected_tags_list %}
+                <a class="btn btn-success" href="?{% url_replace 'tags' selected_tags_list|cut_tag_preserve:tag %}">
+                    <span class="fa fa-times"></span>
+                    {{ tag }}
+                </a>
+            {% endfor %}
+            {% for tag in selectable_tags_list %}
+                <a class="btn btn-link" href="?{% url_replace 'tags' selected_tags_string|add_string_list:tag %}">
+                    <span class="fa fa-plus"></span>
+                    {{ tag }}
+                </a>
+            {% endfor %}
+        </div>
+        <div class="trix-user-sort-button-group">
+            {% for name, order in selectable_sort_list %}
+                <span class="btn trix-sort-button">
+                    {% order_in_use order sort_list as is_negative %}
+                    <a href="?{% url_replace 'ordering' '' %}"
+                    style="{% if order not in sort_list %}visibility:hidden;{% endif %}">
+                        <span class="fa fa-times"></span>
+                    </a>
+                    <a class="btn btn-link"
+                        href="?{% url_replace 'ordering' order|reverse_sort:is_negative %}">
+                        {{ name }}
+                    </a>
+                    <span class="fa {% if is_negative %}fa-arrow-up{% else %}fa-arrow-down{% endif %}"
+                        {% if order not in sort_list %}style="visibility:hidden;"{% endif %}>
+                    </span>
+                </span>
+            {% endfor %}
+        </div>
+    </div>
+    <div>
+        {% include "trix_student/include/pager.django.html" with pager_extraclass="pager-no-topmargin hidden-xs" %}
+        {% for item in solved_assignments %}
+            <section class="trix-user-assignment
+                    {% if item.howsolved == 'bymyself' %}trix-user-assignment-solvedbymyself
+                    {% elif item.howsolved == 'withhelp' %}trix-user-assignment-withhelp
+                    {% else %}trix-user-assignment-notsolved
+                    {% endif %}">
+                <h3><a href="{% url 'trix_assignments_view' item.assignment.id %}?no_filter">{{ item.assignment }}</a></h3>
+                <p>{% trans "Points" %}: {{ item.assignment.points }}</p>
+                <p>{% trans "Solved" %}: {{ item.howsolved | howsolved_to_string }}</p>
+                {% for tag in item.assignment.tags.all %}
+                    <button class="btn btn-xs disabled">{{ tag }}</button>
+                {% endfor %}
+            </section>
+        {% endfor %}
+        {% include "trix_student/include/pager.django.html" %}
     </div>
 </div>
 {% endblock body %}

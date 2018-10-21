@@ -1,6 +1,7 @@
 angular.module('trixStudent', [
   'ngCookies'
   'ngRoute'
+  'ngSanitize'
   'ui.bootstrap'
   'trixStudent.directives'
   'trixStudent.assignments.controllers'

@@ -66,3 +66,7 @@ docs/.DS_Store
 
 # dbdev_tempdata
 dbdev_tempdata/
+
+# tmp
+.*~
+*.*~

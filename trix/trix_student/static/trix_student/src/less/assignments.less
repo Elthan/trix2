@@ -44,6 +44,10 @@
         order: 0;
         max-width: 70%;
         flex: 1 0 70%;
+
+        &>a {
+            color: black;
+        }
     }
 
     .trix-assignment-overlap {
@@ -60,6 +64,7 @@
         .trix-assignment-difficulty {
             width: auto;
             margin-left: auto;
+            margin-top: 40px;
             text-align: right;
             opacity: 0.5;
         }
@@ -129,15 +134,18 @@
 @trix-level-med: rgba(255, 255, 0, 0.5);
 @trix-level-hard: rgba(255, 0, 0, 0.5);
 
-.trix-border-easy {
+// Easy
+.trix-border-0 {
     border: 1px solid @trix-level-easy;
 }
 
-.trix-border-med {
+// Medium
+.trix-border-1 {
     border: 1px solid @trix-level-med;
 }
 
-.trix-border-hard {
+// Hard
+.trix-border-2 {
     border: 1px solid @trix-level-hard;
 }
 
@@ -229,5 +237,13 @@
     h3 {
         font-size: ceil(@font-size-base * 1.2);
         font-weight: bold;
+    }
+}
+
+.trix-assignments-empty {
+    text-align: center;
+
+    &>a {
+        margin-top: 20px;
     }
 }

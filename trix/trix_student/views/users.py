@@ -6,15 +6,54 @@ from django.http import Http404
 from django.urls import reverse_lazy
 
 from trix.trix_core import models
+from trix.utils import experience as exp
+from trix.trix_core import models
 
 
 class ProfilePageView(LoginRequiredMixin, ListView):
     template_name = 'trix_student/users.django.html'
     model = models.HowSolved
+    paginate_by = 20
+
+    def get(self, request, *args, **kwargs):
+        self.tags = self.get_tags()
+        self.sort_list = self.get_sort_list()
+        return super(ProfilePageView, self).get(request, *args, **kwargs)
+
+    def get_queryset(self):
+        queryset = super(ProfilePageView, self).get_queryset()
+        for tagstring in self.tags:
+            queryset = (queryset.filter(assignment__tags__tag=tagstring))
+        # howsolved = models.HowSolved.objects.filter(user=self.request.user)
+        queryset = queryset.filter(user=self.request.user)
+        queryset = queryset.distinct()
+        return queryset
 
     def get_context_data(self):
         context = super(ProfilePageView, self).get_context_data()
+        solved_assignments = self.get_queryset()
         context['user_role'] = self.get_user_role()
+        context['solved_assignments'] = solved_assignments
+        context['bymyself_assignments'] = solved_assignments.filter(howsolved='bymyself')
+        context['withhelp_assignments'] = solved_assignments.filter(howsolved='withhelp')
+        context['selected_tags_list'] = self.tags
+        context['selected_tags_string'] = ','.join(self.tags)
+        context['selectable_tags_list'] = self._get_selectable_tags()
+        context['sort_list'] = ','.join(self.sort_list)
+        # Set experience, level, and level_progress context
+        assignments = []
+        for howsolved in solved_assignments:
+            assignments.append(howsolved.assignment)
+        experience = exp.get_experience(assignments, self.request.user)
+        level = exp.get_level(experience)
+        context['experience'] = experience
+        context['level'] = level
+        context['level_progress'] = exp.get_level_progress(experience, level)
+        context['selectable_sort_list'] = [(_('Title'), 'assignment__title'),
+                                           (_('ID'), 'assignment__id'),
+                                           (_('Points'), 'assignment__points'),
+                                           (_('Solved time'), 'solved_datetime'),
+                                           (_('How solved'), 'howsolved')]
         return context
 
     def get_user_role(self):
@@ -26,55 +65,6 @@ class ProfilePageView(LoginRequiredMixin, ListView):
             return _('Administrator for ') + courses_string
         else:
             return _('Student')
-
-
-class UserDeleteView(LoginRequiredMixin, DeleteView):
-    template_name = 'trix_student/user_delete.django.html'
-    model = models.User
-    success_url = reverse_lazy('trix_student_dashboard')
-
-    def get_object(self, queryset=None):
-        user = super(UserDeleteView, self).get_object()
-        if not user.id == self.request.user.id:
-            raise Http404
-        return user
-
-
-class UserStatisticsView(LoginRequiredMixin, ListView):
-    template_name = "trix_student/user_statistics.django.html"
-    model = models.HowSolved
-    paginate_by = 20
-
-    def get(self, request, *args, **kwargs):
-        self.tags = self.get_tags()
-        self.sort_list = self.get_sort_list()
-        return super(UserStatisticsView, self).get(request, *args, **kwargs)
-
-    def get_queryset(self):
-        queryset = super(UserStatisticsView, self).get_queryset()
-        for tagstring in self.tags:
-            queryset = (queryset.filter(assignment__tags__tag=tagstring))
-        # howsolved = models.HowSolved.objects.filter(user=self.request.user)
-        queryset = queryset.filter(user=self.request.user)
-        queryset = queryset.distinct()
-        return queryset
-
-    def get_context_data(self):
-        context = super(UserStatisticsView, self).get_context_data()
-        solved_assignments = self.get_queryset()
-        context['solved_assignments'] = solved_assignments
-        context['bymyself_assignments'] = solved_assignments.filter(howsolved='bymyself')
-        context['withhelp_assignments'] = solved_assignments.filter(howsolved='withhelp')
-        context['selected_tags_list'] = self.tags
-        context['selected_tags_string'] = ','.join(self.tags)
-        context['selectable_tags_list'] = self._get_selectable_tags()
-        context['sort_list'] = ','.join(self.sort_list)
-        context['selectable_sort_list'] = [(_('Title'), 'assignment__title'),
-                                           (_('ID'), 'assignment__id'),
-                                           (_('Points'), 'assignment__points'),
-                                           (_('Solved time'), 'solved_datetime'),
-                                           (_('How solved'), 'howsolved')]
-        return context
 
     def get_tags(self, course_tag=None):
         tags_string = self.request.GET.get('tags')
@@ -122,3 +112,15 @@ class UserStatisticsView(LoginRequiredMixin, ListView):
                 except FieldError:
                     return None
         return ordering
+
+
+class UserDeleteView(LoginRequiredMixin, DeleteView):
+    template_name = 'trix_student/user_delete.django.html'
+    model = models.User
+    success_url = reverse_lazy('trix_student_dashboard')
+
+    def get_object(self, queryset=None):
+        user = super(UserDeleteView, self).get_object()
+        if not user.id == self.request.user.id:
+            raise Http404
+        return user

@@ -9063,6 +9063,9 @@ fieldset[disabled] .btn-trix-admin.active {
   max-width: 70%;
   flex: 1 0 70%;
 }
+.trix-assignment > h2 > a {
+  color: black;
+}
 .trix-assignment .trix-assignment-overlap {
   order: 1;
   align-self: flex-start;
@@ -9076,6 +9079,7 @@ fieldset[disabled] .btn-trix-admin.active {
 .trix-assignment .trix-assignment-overlap .trix-assignment-difficulty {
   width: auto;
   margin-left: auto;
+  margin-top: 40px;
   text-align: right;
   opacity: 0.5;
 }
@@ -9124,13 +9128,13 @@ fieldset[disabled] .btn-trix-admin.active {
 .trix-assignment .trix-assignment-hidden {
   background: repeating-linear-gradient(-45deg, #ccc, #ccc 1px, transparent 1px, transparent 60px);
 }
-.trix-border-easy {
+.trix-border-0 {
   border: 1px solid rgba(0, 255, 0, 0.5);
 }
-.trix-border-med {
+.trix-border-1 {
   border: 1px solid rgba(255, 255, 0, 0.5);
 }
-.trix-border-hard {
+.trix-border-2 {
   border: 1px solid rgba(255, 0, 0, 0.5);
 }
 .trix-assignment-container {
@@ -9212,6 +9216,12 @@ fieldset[disabled] .btn-trix-admin.active {
 .trix-markdownarticle h3 {
   font-size: 20px;
   font-weight: bold;
+}
+.trix-assignments-empty {
+  text-align: center;
+}
+.trix-assignments-empty > a {
+  margin-top: 20px;
 }
 /**
 * Admin page menu style
@@ -9820,6 +9830,9 @@ body {
   margin-top: 0;
   margin-bottom: 70px;
 }
+.trix-user-assignments-container > div > h1 {
+  margin: 0 0 10px 10px;
+}
 .trix-user-assignment {
   border: 1px solid #ccc;
   margin: 10px;
@@ -9842,8 +9855,8 @@ body {
   overflow: auto;
   background: transparent;
   width: 100%;
-  padding-left: 30px;
-  padding-right: 30px;
+  padding-left: 10px;
+  padding-right: 10px;
   margin: 20px 0 0 0 ;
   display: flex;
   align-items: center;

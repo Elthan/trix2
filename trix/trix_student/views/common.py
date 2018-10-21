@@ -1,12 +1,14 @@
 import json
 from django import http
 from django.conf import settings
+from django.shortcuts import render
 from django.views.generic import ListView
 from django.utils.translation import ugettext_lazy as _
 from functools import reduce
 from urllib import parse
 
 from trix.trix_core import models
+from trix.utils import experience as exp
 
 
 class AssignmentListViewBase(ListView):
@@ -20,6 +22,8 @@ class AssignmentListViewBase(ListView):
         self.non_removeable_tags = self.get_nonremoveable_tags()
         if self.request.GET.get('progressjson'):
             return self._progressjson()
+        elif self.request.GET.get('updatelist'):
+            return self._updateList()
         else:
             return super(AssignmentListViewBase, self).get(request, **kwargs)
 
@@ -38,34 +42,24 @@ class AssignmentListViewBase(ListView):
         # Exclude hidden tasks from those that are not admin
         if not self._get_user_is_admin():
             assignments = assignments.exclude(hidden=True)
-        assignments = assignments.order_by('title')
+        assignments = assignments.order_by('difficulty', 'title')
         return assignments
 
     def _get_progress(self):
         """
-        Gets the progress a user has made. Hidden tasks are not counted unless user is an admin.
+        Gets the progress a user has made.
         """
         assignments = self.get_queryset()
-        if (not self.request.user.is_admin):
-            assignments = assignments.exclude(hidden=True)
         how_solved = (models.HowSolved.objects.filter(assignment__in=assignments)
                       .filter(user=self.request.user.id))
         num_solved = how_solved.count()
         num_total = assignments.count()
         # Get all subject tags
-        tags = []
-        for assignment in assignments:
-            tag_query = assignment.tags.filter(category='s')
-            tags.append(list(tag_query))
-        # Flatten list
-        tags = [tag for sublist in tags for tag in sublist]
-        tagexp = (models.TagExperience.objects
-                  .filter(user=self.request.user)
-                  .filter(tag__in=tags))
-        exp = self._get_experience(tagexp)
+        experience = exp.get_experience(assignments, self.request.user)
         # Calculate level based on tags
-        lvl = self._calculate_level(tagexp, exp)
-        lvl_progress = self._level_progress(exp, lvl)
+        lvl = exp.get_level(experience)
+        lvl_progress = exp.get_level_progress(experience, lvl)
+        lvl_up = False
         if num_total == 0:
             percent = 0
         else:
@@ -74,9 +68,10 @@ class AssignmentListViewBase(ListView):
             'num_total': num_total,
             'num_solved': num_solved,
             'percent': percent,
-            'experience': exp,
+            'experience': experience,
             'level': lvl,
-            'level_progress': lvl_progress
+            'level_progress': lvl_progress,
+            'lvl_up': lvl_up
         }
 
     def _progressjson(self):
@@ -84,6 +79,22 @@ class AssignmentListViewBase(ListView):
             json.dumps(self._get_progress()),
             content_type='application/json'
         )
+
+    def _updateListContext(self):
+        context = {}
+        context['user_is_admin'] = self._get_user_is_admin()
+        filter = self.request.GET.get('no_filter', None)
+        context['assignment_list'] = self._filter_assignments(filter)
+        context['authenticated'] = self.request.user.is_authenticated()
+        return context
+
+    def _updateList(self):
+        context = self._updateListContext()
+        template = 'trix_student/include/assignment_list.django.html'
+        response = render(self.request, template, context)
+        if not context['assignment_list']:
+            response['Hide-Progress'] = 'true'
+        return response
 
     def _get_selectable_tags(self):
         already_selected_tags = self.get_already_selected_tags() + self.selected_tags
@@ -103,6 +114,26 @@ class AssignmentListViewBase(ListView):
             tags.sort()
         return tags
 
+    def get_context_data(self, **kwargs):
+        context = super(AssignmentListViewBase, self).get_context_data(**kwargs)
+        context['non_removeable_tags'] = self.non_removeable_tags
+        context['selected_tags'] = self.selected_tags
+        context['selectable_tags'] = self.selectable_tags
+        context['authenticated'] = self.request.user.is_authenticated()
+        context['urlencoded_success_url'] = parse.urlencode({
+            'success_url': self.request.get_full_path()})
+
+        context['progresstext'] = _(
+            'You have completed {{ solvedPercentage }} percent of assignments matching the '
+            'currently selected tags.')
+
+        context['level_explanation_header'] = _('Levels and experience')
+        context['level_explanation_text'] = _('Experience is calculated based on tasks with tags'
+                                              'you have solved. When solving a task you will get '
+                                              'experience on each of the tags that assignment '
+                                              'has.')
+        return context
+
     def _get_assignmentlist_with_howsolved(self, assignment_list):
         """
         Expand the given list of Assignment objects with information
@@ -119,78 +150,24 @@ class AssignmentListViewBase(ListView):
             howsolvedquery = (models.HowSolved.objects
                               .filter(user=self.request.user, assignment__in=assignment_list))
             howsolvedmap = dict(howsolvedquery.values_list('assignment_id', 'howsolved'))
-        return [
-            (assignment, howsolvedmap.get(assignment.id, ''))
-            for assignment in assignment_list]
+        return [(assignment, howsolvedmap.get(assignment.id, ''))
+                for assignment in assignment_list]
 
-    def get_context_data(self, **kwargs):
-        context = super(AssignmentListViewBase, self).get_context_data(**kwargs)
-        context['non_removeable_tags'] = self.non_removeable_tags
-        context['selected_tags'] = self.selected_tags
-        context['selectable_tags'] = self.selectable_tags
-        context['user_is_admin'] = self._get_user_is_admin()
-        context['urlencoded_success_url'] = parse.urlencode({
-            'success_url': self.request.get_full_path()})
+    def _filter_assignments(self, no_filter=None):
+        """Returns the assignments with howsolved, doing a filtering on difficulties.
 
-        context['assignmentlist_with_howsolved'] = self._get_assignmentlist_with_howsolved(
-            context['assignment_list'])
-
-        context['progresstext'] = _(
-            'You have completed {{ solvedPercentage }} percent of assignments matching the '
-            'currently selected tags.')
-
-        context['level_explanation_header'] = _('Levels and experience')
-        context['level_explanation_text'] = _('Experience is calculated based on tasks with tags'
-                                              'you have solved. When solving a task you will get '
-                                              'experience on each of the tags that assignment '
-                                              'has.')
-        return context
-
-    def _get_experience(self, tags):
-        exp = 0
-        for tag in tags:
-            exp += tag.experience
-        return exp
-
-    def _calculate_level(self, tags, exp):
+        Filtering is done by iterating the assignments and removing assignments that do not match
+        the users experience in the tags for that assignment. I.E. the user has enough experience
+        in a subject tag to be shown the medium difficulty assignments, it will filter out all
+        assignments that are easy for those tags.
         """
-        Calculates the level based on the given TagExperience objects.
-        """
-        level_caps = settings.LEVEL_CAPS
-        for idx in reversed(range(len(level_caps))):
-            if exp >= level_caps[idx]:
-                return idx + 1
-
-    def _current_level_exp(self, level):
-        """
-        Returns the experience required for the given level.
-        """
-        level_caps = settings.LEVEL_CAPS
-        if level - 1 < 0:
-            return level_caps[0]
-        return level_caps[level - 1]
-
-    def _next_level_exp(self, level):
-        """
-        Returns the experience required for the next level.
-        """
-        level_caps = settings.LEVEL_CAPS
-        if level >= len(level_caps) - 1:
-            return level_caps[len(level_caps) - 1]
-        elif level < 0:
-            return level_caps[0]
-        return level_caps[level]
-
-    def _level_progress(self, xp, level):
-        """
-        Returns percentage progress towards next level as int at maximum 100.
-        """
-        base_lvl_xp = self._current_level_exp(level)  # XP needed to reach the current level
-        next_lvl_xp = float(self._next_level_exp(level) -
-                            self._current_level_exp(level))  # XP needed to reach the next level
-        progress_lvl = xp - base_lvl_xp  # XP progress towards next level from current level
-        percentage = round((progress_lvl / next_lvl_xp) * 100)  # Get the percentage and round it
-        return min(int(percentage), 100)  # Return as it and at maximum 100 percent
+        assignments = self.get_queryset()
+        if no_filter is None:
+            for assignment in assignments:
+                difficulty = exp.get_difficulty([assignment], self.request.user)
+                if assignment.difficulty != difficulty:
+                    assignments = assignments.exclude(id=assignment.id)
+        return self._get_assignmentlist_with_howsolved(assignments)
 
     def _get_user_is_admin(self):
         raise NotImplementedError()

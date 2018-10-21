@@ -36,7 +36,9 @@ class HowsolvedView(View):
                 .get())
 
     def _get_tagexperience(self, tag_id):
-        return (models.TagExperience.objects.filter(tag_id=tag_id, user=self.request.user).get())
+        return (models.TagExperience.objects
+                .filter(tag_id=tag_id, user=self.request.user)
+                .get())
 
     def post(self, request, **kwargs):
         try:

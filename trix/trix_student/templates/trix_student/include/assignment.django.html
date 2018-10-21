@@ -22,7 +22,7 @@
         </div>
     </div>
     <h2 id="assignment-{{ assignment.id }}">
-        <a href="{% url 'trix_assignments_view' assignment.id %}" style="color:black;">
+        <a href="{% url 'trix_assignments_view' assignment.id %}">
             {{ assignment }}
         </a>
         {% if assignment.hidden %}
@@ -45,36 +45,36 @@
     <section class="trix-assignmenttext trix-markdownarticle" ng-non-bindable>
         {% trix_assignment_markdown assignment.text %}
     </section>
-    {% if request.user.is_authenticated and not disable_howsolved_box %}
+    {% if authenticated and not disable_howsolved_box %}
         <div class="trix-assignmenthowsolved trix-no-print" ng-cloak>
             <p>
                 {% trans "How did you solve the assignment?" %}
             </p>
             <div class="btn-group" role="radiogroup">
                 <a class="btn"
-                        ng-click="solvedOnMyOwn()"
-                        ng-disabled="saving"
-                        ng-class="buttonClass"
-                        role="radio"
-                        trix-aria-checked="howsolved=='bymyself'">
+                   ng-click="solvedOnMyOwn()"
+                   ng-disabled="saving"
+                   ng-class="buttonClass"
+                   role="radio"
+                   trix-aria-checked="howsolved=='bymyself'">
                     <span class="fa fa-check" ng-show="howsolved=='bymyself'"></span>
                     {% trans "On my own" %}
                 </a>
                 <a class="btn"
-                        ng-click="solvedWithHelp()"
-                        ng-class="buttonClass"
-                        ng-disabled="saving"
-                        role="radio"
-                        trix-aria-checked="howsolved=='withhelp'">
+                   ng-click="solvedWithHelp()"
+                   ng-class="buttonClass"
+                   ng-disabled="saving"
+                   role="radio"
+                   trix-aria-checked="howsolved=='withhelp'">
                     <span class="fa fa-check" ng-show="howsolved=='withhelp'"></span>
                     {% trans "With help" %}
                 </a>
                 <a class="btn"
-                        ng-click="notSolved()"
-                        ng-class="buttonClass"
-                        ng-disabled="saving"
-                        role="radio"
-                        trix-aria-checked="!howsolved">
+                   ng-click="notSolved()"
+                   ng-class="buttonClass"
+                   ng-disabled="saving"
+                   role="radio"
+                   trix-aria-checked="!howsolved">
                     <span class="fa fa-check" ng-show="!howsolved"></span>
                     {% trans "Not solved" %}
                 </a>

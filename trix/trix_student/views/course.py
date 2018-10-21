@@ -41,3 +41,9 @@ class CourseDetailView(AssignmentListViewBase):
         context = super(CourseDetailView, self).get_context_data(**kwargs)
         context['course'] = self.course
         return context
+
+    def _updateListContext(self):
+        context = super(CourseDetailView, self)._updateListContext()
+        context['course'] = self.course
+        context['course_id'] = self.course_id
+        return context

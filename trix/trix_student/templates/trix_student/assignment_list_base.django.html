@@ -11,62 +11,60 @@
         <div class="trix-assignment-container">
             <div class="trix-sticky">
                 <div id="assignments-taggingbox" class="trix-no-print">
-                    {% if request.user.is_authenticated and assignmentlist_with_howsolved %}
-                        <div ng-controller="AssignmentListProgressController"
-                             class="trix-user-level-progress"
-                             ng-cloak>
-                            <div class="trix-user-level-text">
-                                <p>{% trans "Level" %}
-                                {% verbatim %}
-                                {{ level }}
-                                {% endverbatim %}
-                                </p>
-                                <a href="#" target="_blank">
-                                    <i class="far fa-question-circle"></i>
-                                </a>
+                    <div ng-controller="AssignmentListProgressController"
+                         class="trix-user-level-progress"
+                         ng-hide="hideProgress"
+                         ng-cloak>
+                        <div class="trix-user-level-text">
+                            <p>{% trans "Level" %}
+                            {% verbatim %}{{ level }}{% endverbatim %}
+                            </p>
+                            <a href="#" target="_blank">
+                                <i class="far fa-question-circle"></i>
+                            </a>
+                        </div>
+                        {% verbatim %}
+                        <div class="progress">
+                            <div class="progress-bar bg-success"
+                                 role="progressbar"
+                                 aria-valuenow="{{ level_progress }}"
+                                 aria-valuemin="0"
+                                 aria-valuemax="100"
+                                 style="width: {{ level_progress }}%; color: #333;">
+                                {{ experience }}xp
                             </div>
+                        </div>
+                        {% endverbatim %}
+                    </div>
+                    <div ng-controller="AssignmentListProgressController"
+                            class="assignments-progressbox"
+                            ng-hide="hideProgress"
+                            ng-cloak>
+                        <div ng-show="loading">
+                            <span class="fa fa-spin fa-spinner"></span>
+                            <span class="sr-only">{% trans "Loading progress..." %}</span>
+                        </div>
+                        <div ng-show="!loading">
                             {% verbatim %}
-                            <div class="progress">
-                                <div class="progress-bar bg-success"
-                                     role="progressbar"
-                                     aria-valuenow="{{ level_progress }}"
-                                     aria-valuemin="0"
-                                     aria-valuemax="100"
-                                     style="width: {{ level_progress }}%; color: #333;">
-                                    {{ experience }}
-                                </div>
-                            </div>
-                            {% endverbatim %}
-                        </div>
-                        <div ng-controller="AssignmentListProgressController"
-                                class="assignments-progressbox"
-                                ng-cloak>
-                            <div ng-show="loading">
-                                <span class="fa fa-spin fa-spinner"></span>
-                                <span class="sr-only">{% trans "Loading progress..." %}</span>
-                            </div>
-                            <div ng-show="!loading">
-                                {% verbatim %}
-                                    <div class="progress">
-                                        <div class="progress-bar"
-                                             ng-class="progressBarClass"
-                                             role="progressbar"
-                                             aria-valuenow="{{ solvedPercentage }}"
-                                             aria-valuemin="0"
-                                             aria-valuemax="100"
-                                             style="width: {{ solvedPercentage }}%;">
-                                            {{ solvedPercentage }}%
-                                        </div>
+                                <div class="progress">
+                                    <div class="progress-bar"
+                                         ng-class="progressBarClass"
+                                         role="progressbar"
+                                         aria-valuenow="{{ solvedPercentage }}"
+                                         aria-valuemin="0"
+                                         aria-valuemax="100"
+                                         style="width: {{ solvedPercentage }}%;">
+                                        {{ solvedPercentage }}%
                                     </div>
-                                {% endverbatim %}
-                                <p class="text-muted">
-                                    <small>
-                                        {{ progresstext }}
-                                    </small>
-                                </p>
-                            </div>
+                                </div>
+                            {% endverbatim %}
+                            <p class="text-muted">
+                                <small>
+                                    {{ progresstext }}
+                                </small>
+                            </p>
                         </div>
-                    {% endif %}
+                    </div>
                     <div ng-controller="RemoveTagCtrl" class="assignments-selectedtags-listing">
                         <h3>{% trans "Selected tags" %}:</h3>
                         {% for tag in non_removeable_tags %}
@@ -74,7 +72,8 @@
                         {% endfor %}
                         {% if selected_tags %}
                             {% for tag in selected_tags %}
-                                <button type="button" class="btn btn-sm {% if tag|startswith:'-' %}trix-btn-neg{% else %}btn-primary{% endif %}"
+                                <button type="button" class="btn btn-sm
+                                    {% if tag|startswith:'-' %}trix-btn-neg{% else %}btn-primary{% endif %}"
                                         ng-click="removeTag('{{ tag }}')">
                                     {{ tag }}
                                     <span class="fa fa-times"></span>
@@ -97,7 +96,6 @@
                             </select>
                         </form>
                     {% endif %}
-
                     <div class="trix-no-print">
                         <h3>{% trans "Print" %}:</h3>
                         <button class="btn btn-default" onclick="window.print()">
@@ -107,16 +105,14 @@
                     </div>
                 </div>
             </div>
-            <div class="trix-assignment-list">
-                {% include "trix_student/include/pager.django.html" with pager_extraclass="pager-no-topmargin hidden-xs" %}
-                {% for assignment, howsolved in assignmentlist_with_howsolved %}
-                    {% include "trix_student/include/assignment.django.html" %}
-                {% empty %}
-                    <h2>{% trans "No assignments found" %}</h2>
-                {% endfor %}
-                {% include "trix_student/include/pager.django.html" %}
+            <div class="trix-assignment-list" ng-controller="AssignmentListController"
+                ng-init="{% if course %}course_id={{ course.id }}{% endif %};
+                        {% if request.GET.no_filter != None %}no_filter=true{% endif %}">
+                {# {% include "trix_student/include/pager.django.html" with pager_extraclass="pager-no-topmargin hidden-xs" %} #}
+                {# Angular directive located in the directive.coffee file. Loads all the assignmnets. #}
+                <trix-assignment-list />
+                {# {% include "trix_student/include/pager.django.html" %} #}
             </div>
         </div>
     </div>
-
 {% endblock body %}

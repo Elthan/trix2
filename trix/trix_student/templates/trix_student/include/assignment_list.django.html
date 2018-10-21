@@ -1,0 +1,13 @@
+{% load i18n %}
+
+{% for assignment, howsolved in assignment_list %}
+    {% include "trix_student/include/assignment.django.html" %}
+{% empty %}
+<div class="trix-assignments-empty" ng-init="hideProgress=true;">
+    <h2>{% trans "No assignments found!" %}</h2>
+    <p>{% trans "Did you solve them all?" %}</p>
+    <a href="?no_filter" class="btn btn-default">
+        {% trans "Show all assignments" %}
+    </a>
+</div>
+{% endfor %}
