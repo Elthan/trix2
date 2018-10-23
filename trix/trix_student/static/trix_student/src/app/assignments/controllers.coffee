@@ -121,9 +121,9 @@ angular.module('trixStudent.assignments.controllers', ['ngRoute', 'ngSanitize'])
           $scope.solvedPercentage = response.data.percent
           $scope.experience = response.data.experience
           # Call for reloading assignments if user leveled up or down
-          console.log response.data
-          if response.data.lvl_up
-              $rootScope.$emit('assignmentList.updateList')
+          # console.log response.data
+          if response.data.level != $scope.level
+            $rootScope.$emit('assignmentList.updateList')
           $scope.level = response.data.level
           $scope.level_progress = response.data.level_progress
           if $scope.solvedPercentage > 1 and $scope.solvedPercentage < 20

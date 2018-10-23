@@ -11,6 +11,7 @@
         <div class="trix-assignment-container">
             <div class="trix-sticky">
                 <div id="assignments-taggingbox" class="trix-no-print">
+                    {% if authenticated %}
                     <div ng-controller="AssignmentListProgressController"
                          class="trix-user-level-progress"
                          ng-hide="hideProgress"
@@ -65,6 +66,7 @@
                             </p>
                         </div>
                     </div>
+                    {% endif %}
                     <div ng-controller="RemoveTagCtrl" class="assignments-selectedtags-listing">
                         <h3>{% trans "Selected tags" %}:</h3>
                         {% for tag in non_removeable_tags %}

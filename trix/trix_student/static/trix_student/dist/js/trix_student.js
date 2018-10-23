@@ -161,8 +161,8 @@
           $scope.solvedPercentage = response.data.percent;
           $scope.experience = response.data.experience;
           // Call for reloading assignments if user leveled up or down
-          console.log(response.data);
-          if (response.data.lvl_up) {
+          // console.log response.data
+          if (response.data.level !== $scope.level) {
             $rootScope.$emit('assignmentList.updateList');
           }
           $scope.level = response.data.level;

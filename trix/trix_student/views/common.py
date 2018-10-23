@@ -81,12 +81,12 @@ class AssignmentListViewBase(ListView):
         )
 
     def _updateListContext(self):
-        context = {}
-        context['user_is_admin'] = self._get_user_is_admin()
         filter = self.request.GET.get('no_filter', None)
-        context['assignment_list'] = self._filter_assignments(filter)
-        context['authenticated'] = self.request.user.is_authenticated()
-        return context
+        return {
+            'user_is_admin': self._get_user_is_admin(),
+            'assignment_list': self._filter_assignments(filter),
+            'authenticated': self.request.user.is_authenticated()
+        }
 
     def _updateList(self):
         context = self._updateListContext()
@@ -164,7 +164,7 @@ class AssignmentListViewBase(ListView):
         assignments = self.get_queryset()
         if no_filter is None:
             for assignment in assignments:
-                difficulty = exp.get_difficulty([assignment], self.request.user)
+                difficulty = exp.get_difficulty(assignment, self.request.user)
                 if assignment.difficulty != difficulty:
                     assignments = assignments.exclude(id=assignment.id)
         return self._get_assignmentlist_with_howsolved(assignments)

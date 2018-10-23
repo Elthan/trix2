@@ -38,7 +38,6 @@ def current_level_exp(level):
 def next_level_exp(level):
     """Returns the experience required for the next level."""
     level_caps = settings.LEVEL_CAPS
-    print(f"Level caps: {level_caps}\tlevel: {level}")
     if level >= len(level_caps) - 1:
         return level_caps[len(level_caps) - 1]
     elif level < 0:
@@ -55,9 +54,9 @@ def get_level_progress(xp, level):
     return min(int(percentage), 100)  # Return as it and at maximum 100 percent
 
 
-def get_difficulty(assignments, user):
-    """Returns the difficulty for the given level. Simply returns '2' on KeyError."""
-    exp = get_experience(assignments, user)
+def get_difficulty(assignment, user):
+    """Returns the difficulty for the given assignment. Simply returns '2' on KeyError."""
+    exp = get_experience([assignment], user)
     lvl = get_level(exp)
     cle = current_level_exp(lvl)
     try:
