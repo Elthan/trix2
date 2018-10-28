@@ -32,7 +32,7 @@ class UserAdmin(admin.ModelAdmin):
         'is_admin',
         'last_login',
     ]
-    fields = ['email', 'is_admin', 'experience', 'level']
+    fields = ['email', 'is_admin']
     readonly_fields = ['last_login']
     actions = [set_administrators, unset_administrators]
 
