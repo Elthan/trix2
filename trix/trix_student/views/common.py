@@ -122,7 +122,7 @@ class AssignmentListViewBase(ListView):
         context['authenticated'] = self.request.user.is_authenticated()
         context['urlencoded_success_url'] = parse.urlencode({
             'success_url': self.request.get_full_path()})
-
+        context['user_is_admin'] = self._get_user_is_admin()
         context['progresstext'] = _(
             'You have completed {{ solvedPercentage }} percent of assignments matching the '
             'currently selected tags.')
