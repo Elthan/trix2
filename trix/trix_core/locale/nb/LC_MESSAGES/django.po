@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trix_core\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-13 12:54+0200\n"
+"POT-Creation-Date: 2018-10-28 20:38+0100\n"
 "PO-Revision-Date: 2014-12-21 22:43+0100\n"
 "Last-Translator: Tor Ivar Johansen <tor@appresso.no>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,39 +26,39 @@ msgstr "Gi administratortilgang til valgte brukere"
 msgid "Remove admin access from the selected users"
 msgstr "Fjern administratortilgang til valgte brukere"
 
-#: trix/trix_core/admin.py:46
+#: trix/trix_core/admin.py:44
 msgid "tag is in use"
 msgstr "tag er i bruk"
 
-#: trix/trix_core/admin.py:51 trix/trix_core/models.py:347
+#: trix/trix_core/admin.py:49 trix/trix_core/models.py:288
 msgid "Yes"
 msgstr "Ja"
 
-#: trix/trix_core/admin.py:52 trix/trix_core/models.py:347
+#: trix/trix_core/admin.py:50 trix/trix_core/models.py:288
 msgid "No"
 msgstr "Nei"
 
-#: trix/trix_core/admin.py:98
+#: trix/trix_core/admin.py:96
 msgid "Number of assignments"
 msgstr "Antall oppgaver"
 
-#: trix/trix_core/admin.py:103
+#: trix/trix_core/admin.py:101
 msgid "Is in use"
 msgstr "Er i bruk"
 
-#: trix/trix_core/models.py:41
+#: trix/trix_core/models.py:40
 msgid "Is active?"
 msgstr "Er aktiv?"
 
-#: trix/trix_core/models.py:42
+#: trix/trix_core/models.py:41
 msgid "User is active? Inactive users can not log in."
 msgstr "Er brukeren aktiv? Inaktive brukere kan ikke logge inn"
 
-#: trix/trix_core/models.py:47
+#: trix/trix_core/models.py:46
 msgid "Is superuser?"
 msgstr "Er superbruker?"
 
-#: trix/trix_core/models.py:48
+#: trix/trix_core/models.py:47
 #, fuzzy
 #| msgid "User is admin? Admins have full access to the admin UI."
 msgid "User is superuser? Superusers have full access to the admin UI."
@@ -66,69 +66,65 @@ msgstr ""
 "Er brukeren administrator? Administratorer har full tilgang til "
 "admingrensesnittet"
 
-#: trix/trix_core/models.py:63
-msgid "Experience points"
-msgstr "Erfaringspoeng"
-
-#: trix/trix_core/models.py:69
-msgid "Level"
-msgstr "Nivå"
-
-#: trix/trix_core/models.py:80
+#: trix/trix_core/models.py:67
 msgid "User"
 msgstr "Bruker"
 
-#: trix/trix_core/models.py:81
+#: trix/trix_core/models.py:68
 msgid "Users"
 msgstr "Brukere"
 
-#: trix/trix_core/models.py:219
+#: trix/trix_core/models.py:139
 msgid "No category"
 msgstr "Ingen kategori"
 
-#: trix/trix_core/models.py:220 trix/trix_core/models.py:288
-#: trix/trix_core/models.py:416
+#: trix/trix_core/models.py:139 trix/trix_core/models.py:229
+#: trix/trix_core/models.py:389
 msgid "Course"
 msgstr "Kurs"
 
-#: trix/trix_core/models.py:221
+#: trix/trix_core/models.py:140
 msgid "Period"
 msgstr "Semester"
 
-#: trix/trix_core/models.py:226
+#: trix/trix_core/models.py:140
+msgid "Subject"
+msgstr "Tema"
+
+#: trix/trix_core/models.py:150
 msgid "Tag"
 msgstr "Tag"
 
-#: trix/trix_core/models.py:227 trix/trix_core/models.py:327
-#: trix/trix_core/models.py:421
+#: trix/trix_core/models.py:151 trix/trix_core/models.py:268
+#: trix/trix_core/models.py:394
 msgid "Tags"
 msgstr "Tags"
 
-#: trix/trix_core/models.py:264 trix/trix_core/models.py:431
+#: trix/trix_core/models.py:205 trix/trix_core/models.py:404
 msgid "Description"
 msgstr "Beskrivelse"
 
-#: trix/trix_core/models.py:289
+#: trix/trix_core/models.py:230
 msgid "Courses"
 msgstr "Kurs"
 
-#: trix/trix_core/models.py:323 trix/trix_core/models.py:424
+#: trix/trix_core/models.py:264 trix/trix_core/models.py:397
 msgid "Title"
 msgstr "Tittel"
 
-#: trix/trix_core/models.py:330
+#: trix/trix_core/models.py:271
 msgid "Assignment text"
 msgstr "Oppgavetekst"
 
-#: trix/trix_core/models.py:331
+#: trix/trix_core/models.py:272
 msgid "Write the assignment here."
 msgstr "Skriv oppgaven her."
 
-#: trix/trix_core/models.py:335
+#: trix/trix_core/models.py:276
 msgid "Solution"
 msgstr "Løsning"
 
-#: trix/trix_core/models.py:336
+#: trix/trix_core/models.py:277
 msgid ""
 "If you want your students to be able to view a suggested solution, write the "
 "solution here."
@@ -136,47 +132,69 @@ msgstr ""
 "Hvis du vil at studentene skal kunne se et løsningsforslag, skriv løsningen "
 "her."
 
-#: trix/trix_core/models.py:340
+#: trix/trix_core/models.py:281
 msgid "Created"
 msgstr "Opprettet"
 
-#: trix/trix_core/models.py:344
+#: trix/trix_core/models.py:285
 msgid "Last changed"
 msgstr "Sist modifisert"
 
-#: trix/trix_core/models.py:351
+#: trix/trix_core/models.py:292
 msgid "Hide assignment from students"
 msgstr "Skjul oppgaven for studenter"
 
-#: trix/trix_core/models.py:355
-msgid "Point value"
-msgstr "Poengverdi"
+#: trix/trix_core/models.py:296
+msgid "Experience points"
+msgstr "Erfaringspoeng"
 
-#: trix/trix_core/models.py:361
+#: trix/trix_core/models.py:297
+msgid "How much experience each subject tag on this assignment is worth."
+msgstr "Hvor mye erfaring hver tema-tag er verdt på denne oppgaven."
+
+#: trix/trix_core/models.py:300
+msgid "Easy"
+msgstr "Lett"
+
+#: trix/trix_core/models.py:300
+msgid "Medium"
+msgstr "Middels"
+
+#: trix/trix_core/models.py:300
+msgid "Hard"
+msgstr "Vanskelig"
+
+#: trix/trix_core/models.py:311
 msgid "Assignment"
 msgstr "Oppgave"
 
-#: trix/trix_core/models.py:362
+#: trix/trix_core/models.py:312
 msgid "Assignments"
 msgstr "Oppgaver"
 
-#: trix/trix_core/models.py:397
+#: trix/trix_core/models.py:352
 msgid "Solved by myself"
 msgstr "Løste på egen hånd"
 
-#: trix/trix_core/models.py:398
+#: trix/trix_core/models.py:353
 msgid "Solved with help"
 msgstr "Løste med hjelp"
 
-#: trix/trix_core/models.py:405
+#: trix/trix_core/models.py:360
 msgid "Solved"
 msgstr "Løst"
 
-#: trix/trix_core/models.py:437
+#: trix/trix_core/models.py:377
+#, fuzzy
+#| msgid "Experience points"
+msgid "Experience points for this tag"
+msgstr "Erfaringspoeng"
+
+#: trix/trix_core/models.py:410
 msgid "Permalink"
 msgstr "Permalink"
 
-#: trix/trix_core/models.py:438
+#: trix/trix_core/models.py:411
 msgid "Permalinks"
 msgstr "Permalinker"
 
@@ -203,13 +221,9 @@ msgstr ""
 "tilgjengelig via \"%(course_tag)s\"."
 
 #: trix/trix_core/templatetags/trix_core_tags.py:47
-#, fuzzy
-#| msgid "Solved by myself"
 msgid "By myself"
 msgstr "Løste på egen hånd"
 
 #: trix/trix_core/templatetags/trix_core_tags.py:47
-#, fuzzy
-#| msgid "Solved with help"
 msgid "With help"
 msgstr "Løste med hjelp"

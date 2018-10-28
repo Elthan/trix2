@@ -128,10 +128,10 @@ class AssignmentListViewBase(ListView):
             'currently selected tags.')
 
         context['level_explanation_header'] = _('Levels and experience')
-        context['level_explanation_text'] = _('Experience is calculated based on tasks with tags'
+        context['level_explanation_text'] = _('Experience is calculated based on tasks with tags '
                                               'you have solved. When solving a task you will get '
-                                              'experience on each of the tags that assignment '
-                                              'has.')
+                                              'experience on each of the subject tags that '
+                                              'assignment has.')
         return context
 
     def _get_assignmentlist_with_howsolved(self, assignment_list):

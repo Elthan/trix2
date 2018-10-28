@@ -154,6 +154,7 @@ angular.module('trixStudent.assignments.controllers', ['ngRoute', 'ngSanitize'])
     apiUrl = new Url()
     $scope._reloadAssignmentList = ->
         $scope.updateAssignmentList = {}
+        $scope.levelUp = true
     unbindAssignmentListChanged = $rootScope.$on 'assignmentList.updateList', ->
         $scope._reloadAssignmentList()
     $scope.$on('$destroy', unbindAssignmentListChanged)

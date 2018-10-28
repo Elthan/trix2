@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trix_admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-16 20:16+0200\n"
+"POT-Creation-Date: 2018-10-28 20:38+0100\n"
 "PO-Revision-Date: 2015-01-08 12:35+0100\n"
 "Last-Translator: Espen Angell Kristiansen <post@espenak.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -59,6 +59,21 @@ msgstr "I"
 #: trix/trix_admin/templates/trix_admin/delete.django.html:18
 msgid "Cancel"
 msgstr "Avbryt"
+
+#: trix/trix_admin/templates/trix_admin/import.django.html:4
+#: trix/trix_admin/templates/trix_admin/import.django.html:10
+msgid "Import"
+msgstr ""
+
+#: trix/trix_admin/templates/trix_admin/import.django.html:18
+msgid ""
+"\n"
+"                Hello, this is a test!\n"
+"            "
+msgstr ""
+"\n"
+"                Hei, dette er en test!\n"
+"            "
 
 #: trix/trix_admin/templates/trix_admin/roleselect.django.html:6
 msgid "Select course"
@@ -133,17 +148,17 @@ msgid "Filter"
 msgstr "Filtrer"
 
 #: trix/trix_admin/templates/trix_admin/statistics.django.html:151
-#: trix/trix_admin/views/statistics.py:137
+#: trix/trix_admin/views/statistics.py:131
 msgid "Completed by their own"
 msgstr "Løst på egenhånd"
 
 #: trix/trix_admin/templates/trix_admin/statistics.django.html:157
-#: trix/trix_admin/views/statistics.py:144
+#: trix/trix_admin/views/statistics.py:138
 msgid "Completed with help"
 msgstr "Løst med hjelp"
 
 #: trix/trix_admin/templates/trix_admin/statistics.django.html:163
-#: trix/trix_admin/views/statistics.py:148
+#: trix/trix_admin/views/statistics.py:142
 msgid "Not completed"
 msgstr "Ikke løst"
 
@@ -151,75 +166,89 @@ msgstr "Ikke løst"
 msgid "There was no assignments matching the chosen tag"
 msgstr "Det fantes ingen oppgaver som er merket med valgte tag"
 
-#: trix/trix_admin/views/assignments.py:30
-msgid "Tags can only contain letters, numbers, underscore (_)and hyphen (-)."
+#: trix/trix_admin/views/assignments.py:25
+msgid ""
+"Tags can only contain letters, numbers, underscore (_)and hyphen (-). Add "
+"tag category by using brackets, example: [s] for subject category."
 msgstr ""
 "Tags kan bare inneholde bokstaver, tall, understrek (_) og bindestrek (-)."
 
-#: trix/trix_admin/views/assignments.py:40
-#: trix/trix_admin/views/assignments.py:125
+#: trix/trix_admin/views/assignments.py:36
+#: trix/trix_admin/views/assignments.py:127
 #: trix/trix_admin/views/permalinks.py:27
 msgid "Edit"
 msgstr "Rediger"
 
-#: trix/trix_admin/views/assignments.py:43
+#: trix/trix_admin/views/assignments.py:39
 msgid "Preview"
 msgstr "Forhåndsvis"
 
-#: trix/trix_admin/views/assignments.py:46
+#: trix/trix_admin/views/assignments.py:42
 #: trix/trix_admin/views/permalinks.py:33
 msgid "Delete"
 msgstr "Slett"
 
-#: trix/trix_admin/views/assignments.py:61
+#: trix/trix_admin/views/assignments.py:57
 #: trix/trix_admin/views/permalinks.py:30
 msgid "View"
 msgstr "Vis"
 
-#: trix/trix_admin/views/assignments.py:116
+#: trix/trix_admin/views/assignments.py:112
 #: trix/trix_admin/views/permalinks.py:72
 msgid "Create"
 msgstr "Opprett"
 
-#: trix/trix_admin/views/assignments.py:118
+#: trix/trix_admin/views/assignments.py:114
 msgid "Show on website"
 msgstr "Vis på nettsiden"
 
-#: trix/trix_admin/views/assignments.py:129
-#: trix/trix_admin/views/assignments.py:305
+#: trix/trix_admin/views/assignments.py:116
+#, fuzzy
+#| msgid "Number of assignments:"
+msgid "Import assignments"
+msgstr "Antall oppgaver:"
+
+#: trix/trix_admin/views/assignments.py:119
+#, fuzzy
+#| msgid "Assignments"
+msgid "Export assignments"
+msgstr "Oppgaver"
+
+#: trix/trix_admin/views/assignments.py:131
+#: trix/trix_admin/views/assignments.py:309
 msgid "Add tag"
 msgstr "Legg til tag"
 
-#: trix/trix_admin/views/assignments.py:133
+#: trix/trix_admin/views/assignments.py:135
 msgid "Remove tag"
 msgstr "Fjern tag"
 
-#: trix/trix_admin/views/assignments.py:229
+#: trix/trix_admin/views/assignments.py:232
 msgid "Assignment YAML"
 msgstr "Oppgaver YAML"
 
-#: trix/trix_admin/views/assignments.py:265
+#: trix/trix_admin/views/assignments.py:268
 msgid "Save"
 msgstr "Lagre"
 
-#: trix/trix_admin/views/assignments.py:278
+#: trix/trix_admin/views/assignments.py:281
 msgid "Tag"
 msgstr "Tag"
 
-#: trix/trix_admin/views/assignments.py:301
-#: trix/trix_admin/views/assignments.py:337
+#: trix/trix_admin/views/assignments.py:305
+#: trix/trix_admin/views/assignments.py:341
 msgid "tags on selected assignments"
 msgstr "tags på valgte oppgaver"
 
-#: trix/trix_admin/views/assignments.py:311
+#: trix/trix_admin/views/assignments.py:315
 msgid "Type in the tag you want to add to the selected assignments"
 msgstr "Skriv inn taggen du vil legge til på valgte oppgaver"
 
-#: trix/trix_admin/views/assignments.py:341
+#: trix/trix_admin/views/assignments.py:345
 msgid "Delete tag"
 msgstr "Slett tag"
 
-#: trix/trix_admin/views/assignments.py:347
+#: trix/trix_admin/views/assignments.py:351
 msgid "Type in the tag you want to remove from the selected assignments"
 msgstr "Skriv inn taggen du vil fjerne fra valgte oppgaver"
 
@@ -227,43 +256,44 @@ msgstr "Skriv inn taggen du vil fjerne fra valgte oppgaver"
 msgid "Select a course"
 msgstr "Velg et kurs"
 
-#: trix/trix_admin/views/statistics.py:126
+#: trix/trix_admin/views/statistics.py:120
 msgid ""
 "Simple statistics showing percentage share of how the assignments where "
 "solved"
 msgstr "Enkel statistikk som viser prosentvis hvordan oppgavene er løst"
 
-#: trix/trix_admin/views/statistics.py:128
+#: trix/trix_admin/views/statistics.py:122
 msgid "Total number of users"
 msgstr "Totalt antall brukere"
 
-#: trix/trix_admin/views/statistics.py:130
+#: trix/trix_admin/views/statistics.py:124
 msgid "Assignment title"
 msgstr "Oppgavetittel"
 
-#: trix/trix_admin/views/statistics.py:130
+#: trix/trix_admin/views/statistics.py:124
 msgid "Percentage"
 msgstr "Prosent"
 
-#: trix/trix_admin/views/statistics.py:130
+#: trix/trix_admin/views/statistics.py:124
 msgid "Number"
 msgstr "Antall"
 
-#: trix/trix_admin/views/statistics.py:214
+#: trix/trix_admin/views/statistics.py:208
 msgid "Title"
 msgstr "Tittel"
 
-#: trix/trix_admin/views/statistics.py:215
+#: trix/trix_admin/views/statistics.py:209
 msgid "ID"
 msgstr "ID"
 
-#: trix/trix_admin/views/statistics.py:216
+#: trix/trix_admin/views/statistics.py:210
 msgid "Date created"
 msgstr "Dato opprettet"
 
-#: trix/trix_admin/views/statistics.py:217
+#: trix/trix_admin/views/statistics.py:211
 msgid "Last updated"
 msgstr "Sist oppdatert"
 
-#~ msgid "Submit"
-#~ msgstr "Legg til"
+#: trix/trix_admin/views/statistics.py:212
+msgid "Solved"
+msgstr "Løst"
