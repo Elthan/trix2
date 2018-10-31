@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trix_admin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-28 20:38+0100\n"
+"POT-Creation-Date: 2018-10-31 21:25+0100\n"
 "PO-Revision-Date: 2015-01-08 12:35+0100\n"
 "Last-Translator: Espen Angell Kristiansen <post@espenak.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -203,8 +203,8 @@ msgid "Show on website"
 msgstr "Vis på nettsiden"
 
 #: trix/trix_admin/views/assignments.py:116
-msgid "Import assignments"
-msgstr "Antall oppgaver:"
+msgid "Import assignment"
+msgstr "Importert oppgave"
 
 #: trix/trix_admin/views/assignments.py:119
 msgid "Export assignments"

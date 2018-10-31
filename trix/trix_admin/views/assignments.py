@@ -113,7 +113,7 @@ class AssignmentListView(AssignmentQuerysetForRoleMixin, objecttable.ObjectTable
             objecttable.Button(reverse('trix_student_course', kwargs={'course_id': course.id}),
                                label=_('Show on website')),
             objecttable.Button(app.reverse_appurl('import'),
-                               label=_("Import assignments")),
+                               label=_("Import assignment")),
             # TODO: take all assignments -> export as X (same as CSV)
             objecttable.Button(app.reverse_appurl('export'),
                                label=_("Export assignments")),

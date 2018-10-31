@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trix_student\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-28 20:38+0100\n"
+"POT-Creation-Date: 2018-10-31 21:25+0100\n"
 "PO-Revision-Date: 2015-01-03 17:40+0100\n"
 "Last-Translator: Espen Angell Kristiansen <post@espenak.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,36 +41,36 @@ msgstr "Noe gikk galt!"
 msgid "Assignments"
 msgstr "Oppgaver"
 
-#: trix/trix_student/templates/trix_student/assignment_list_base.django.html:20
+#: trix/trix_student/templates/trix_student/assignment_list_base.django.html:26
 #: trix/trix_student/templates/trix_student/users.django.html:45
 msgid "Level"
 msgstr "Nivå"
 
-#: trix/trix_student/templates/trix_student/assignment_list_base.django.html:46
+#: trix/trix_student/templates/trix_student/assignment_list_base.django.html:55
 msgid "Loading progress..."
 msgstr "Laster progresjon..."
 
-#: trix/trix_student/templates/trix_student/assignment_list_base.django.html:71
+#: trix/trix_student/templates/trix_student/assignment_list_base.django.html:80
 msgid "Selected tags"
 msgstr "Valgte tags"
 
-#: trix/trix_student/templates/trix_student/assignment_list_base.django.html:88
+#: trix/trix_student/templates/trix_student/assignment_list_base.django.html:97
 msgid "Filter"
 msgstr "Filtrer"
 
-#: trix/trix_student/templates/trix_student/assignment_list_base.django.html:90
+#: trix/trix_student/templates/trix_student/assignment_list_base.django.html:99
 msgid "Filter out"
 msgstr "Filtrer"
 
-#: trix/trix_student/templates/trix_student/assignment_list_base.django.html:94
+#: trix/trix_student/templates/trix_student/assignment_list_base.django.html:103
 msgid "Select a tag"
 msgstr "Velg en tag"
 
-#: trix/trix_student/templates/trix_student/assignment_list_base.django.html:102
+#: trix/trix_student/templates/trix_student/assignment_list_base.django.html:111
 msgid "Print"
 msgstr "Skriv ut"
 
-#: trix/trix_student/templates/trix_student/assignment_list_base.django.html:105
+#: trix/trix_student/templates/trix_student/assignment_list_base.django.html:114
 msgid "Print this page"
 msgstr "Skriv ut denne siden"
 
@@ -78,11 +78,11 @@ msgstr "Skriv ut denne siden"
 msgid "Trix"
 msgstr "Trix"
 
-#: trix/trix_student/templates/trix_student/base.django.html:35
+#: trix/trix_student/templates/trix_student/base.django.html:38
 msgid "You are not authenticated."
 msgstr "Du er ikke logget inn."
 
-#: trix/trix_student/templates/trix_student/base.django.html:36
+#: trix/trix_student/templates/trix_student/base.django.html:39
 msgid ""
 "If you are not authenticated, you will not be able to keep track of your "
 "progress."
@@ -90,7 +90,7 @@ msgstr ""
 "Så lenge du ikke er logget inn går du glipp av muligheten for å holde styr "
 "på din egen progresjon."
 
-#: trix/trix_student/templates/trix_student/base.django.html:40
+#: trix/trix_student/templates/trix_student/base.django.html:43
 #: trix/trix_student/templates/trix_student/include/header.django.html:59
 msgid "Sign in"
 msgstr "Logg inn"
@@ -443,14 +443,18 @@ msgid "Levels and experience"
 msgstr "Nivåer og erfaring"
 
 #: trix/trix_student/views/common.py:131
+#, fuzzy
+#| msgid ""
+#| "Experience is calculated based on tasks with tags you have solved. When "
+#| "solving a task you will get experience on each of the tags that "
+#| "assignment has."
 msgid ""
 "Experience is calculated based on tasks with tags you have solved. When "
-"solving a task you will get experience on each of the tags that assignment "
-"has."
+"solving a task you will get experience on each of the subject tags that "
+"assignment has."
 msgstr ""
-"Erfaring er beregnet ut i fra oppgaver med tagger du har løst. Når "
-"man løser en oppgave vil du få erfaring for hver av tema-taggene den oppgaven "
-"har."
+"Erfaring er beregnet ut i fra oppgaver med tagger du har løst. Når man løser "
+"en oppgave vil du få erfaring for hver av tema-taggene den oppgaven har."
 
 #: trix/trix_student/views/login.py:15
 msgid "Username"
