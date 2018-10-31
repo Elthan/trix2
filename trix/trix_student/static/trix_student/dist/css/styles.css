@@ -9469,6 +9469,9 @@ body {
     width: 100%;
   }
 }
+.course-list {
+  margin-bottom: 70px;
+}
 /**
 * Main assignment and permalink pages
 **/
