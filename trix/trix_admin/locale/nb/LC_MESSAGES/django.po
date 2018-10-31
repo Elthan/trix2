@@ -203,16 +203,12 @@ msgid "Show on website"
 msgstr "Vis på nettsiden"
 
 #: trix/trix_admin/views/assignments.py:116
-#, fuzzy
-#| msgid "Number of assignments:"
 msgid "Import assignments"
 msgstr "Antall oppgaver:"
 
 #: trix/trix_admin/views/assignments.py:119
-#, fuzzy
-#| msgid "Assignments"
 msgid "Export assignments"
-msgstr "Oppgaver"
+msgstr "Eksporter oppgaver"
 
 #: trix/trix_admin/views/assignments.py:131
 #: trix/trix_admin/views/assignments.py:309

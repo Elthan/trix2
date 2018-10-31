@@ -7,6 +7,12 @@
 {% block body %}
     {% block pageheader %}
     {% endblock pageheader %}
+    {# Enable popover #}
+    <script>
+        $(function () {
+            $('[data-toggle="popover"]').popover()
+        })
+    </script>
     <div class="container">
         <div class="trix-assignment-container">
             <div class="trix-sticky">
@@ -20,7 +26,10 @@
                             <p>{% trans "Level" %}
                             {% verbatim %}{{ level }}{% endverbatim %}
                             </p>
-                            <a href="#" target="_blank">
+                            <a href="#" data-toggle="popover"
+                                data-placement="left"
+                                data-title="{{ level_explanation_header }}"
+                                data-content="{{ level_explanation_text }}">
                                 <i class="far fa-question-circle"></i>
                             </a>
                         </div>

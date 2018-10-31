@@ -185,10 +185,8 @@ msgid "Solved"
 msgstr "Løst"
 
 #: trix/trix_core/models.py:377
-#, fuzzy
-#| msgid "Experience points"
 msgid "Experience points for this tag"
-msgstr "Erfaringspoeng"
+msgstr "Erfaringspoeng for denne taggen"
 
 #: trix/trix_core/models.py:410
 msgid "Permalink"

@@ -211,7 +211,8 @@
     unbindAssignmentListChanged;
       apiUrl = new Url();
       $scope._reloadAssignmentList = function() {
-        return $scope.updateAssignmentList = {};
+        $scope.updateAssignmentList = {};
+        return $scope.levelUp = true;
       };
       unbindAssignmentListChanged = $rootScope.$on('assignmentList.updateList',
     function() {

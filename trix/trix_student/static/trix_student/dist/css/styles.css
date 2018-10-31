@@ -9179,6 +9179,9 @@ fieldset[disabled] .btn-trix-admin.active {
 #assignments-taggingbox .assignments-progressbox .progress {
   margin-bottom: 10px;
 }
+#assignments-taggingbox div .popover-title {
+  margin-top: 0;
+}
 #assignments-taggingbox h3 {
   margin-top: 30px;
   font-size: 18px;

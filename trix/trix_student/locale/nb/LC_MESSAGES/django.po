@@ -420,7 +420,7 @@ msgstr "SLETT MEG"
 
 #: trix/trix_student/templates/trix_student/users.django.html:76
 msgid "Solved assignments"
-msgstr "Oppgaver"
+msgstr "Løste oppgaver"
 
 #: trix/trix_student/templates/trix_student/users.django.html:119
 #: trix/trix_student/views/users.py:54
