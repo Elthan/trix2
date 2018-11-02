@@ -443,11 +443,6 @@ msgid "Levels and experience"
 msgstr "Nivåer og erfaring"
 
 #: trix/trix_student/views/common.py:131
-#, fuzzy
-#| msgid ""
-#| "Experience is calculated based on tasks with tags you have solved. When "
-#| "solving a task you will get experience on each of the tags that "
-#| "assignment has."
 msgid ""
 "Experience is calculated based on tasks with tags you have solved. When "
 "solving a task you will get experience on each of the subject tags that "
