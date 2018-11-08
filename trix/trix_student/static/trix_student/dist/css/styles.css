@@ -9226,6 +9226,18 @@ fieldset[disabled] .btn-trix-admin.active {
 .trix-assignments-empty > a {
   margin-top: 20px;
 }
+.trix-user-level-text {
+  display: flex;
+  justify-content: space-between;
+}
+.trix-user-level-text > a {
+  color: black;
+  opacity: 0.5;
+}
+.trix-level.ng-hide {
+  transition: 0.3s linear all;
+  opacity: 0;
+}
 /**
 * Admin page menu style
 **/
@@ -9816,14 +9828,6 @@ body {
 }
 .trix-user-text > p {
   font-size: 1.1em;
-}
-.trix-user-level-text {
-  display: flex;
-  justify-content: space-between;
-}
-.trix-user-level-text > a {
-  color: black;
-  opacity: 0.5;
 }
 .trix-user-level-progress {
   min-height: 80px;

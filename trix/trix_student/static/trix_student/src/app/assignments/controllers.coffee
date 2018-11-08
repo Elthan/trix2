@@ -1,4 +1,5 @@
-angular.module('trixStudent.assignments.controllers', ['ngRoute', 'ngSanitize'])
+angular.module('trixStudent.assignments.controllers',
+                ['ngRoute', 'ngSanitize', 'ngAnimate'])
 
 .controller('AddTagCtrl', [
   '$scope', '$window',
@@ -106,12 +107,14 @@ angular.module('trixStudent.assignments.controllers', ['ngRoute', 'ngSanitize'])
 ])
 
 .controller('AssignmentListProgressController', [
-  '$scope', '$http', '$rootScope',
-  ($scope, $http, $rootScope) ->
+  '$scope', '$http', '$rootScope', '$timeout'
+  ($scope, $http, $rootScope, $timeout) ->
     $scope.loading = true
     $scope.hideProgress = false
     apiUrl = new Url()
     apiUrl.query.progressjson = '1'
+    $scope.levelUpAlert = false
+    $scope.levelDownAlert = false
 
     $scope._loadProgress = ->
       $scope.loading = true
@@ -121,9 +124,18 @@ angular.module('trixStudent.assignments.controllers', ['ngRoute', 'ngSanitize'])
           $scope.solvedPercentage = response.data.percent
           $scope.experience = response.data.experience
           # Call for reloading assignments if user leveled up or down
-          # console.log response.data
-          if response.data.level != $scope.level
+          if response.data.level != $scope.level && ($scope.level?)
             $rootScope.$emit('assignmentList.updateList')
+            if response.data.level > $scope.level
+                $scope.levelUpAlert = true
+                $timeout(() ->
+                    $scope.levelUpAlert = false
+                , 3000)
+            else
+                $scope.levelDownAlert = true
+                $timeout(() ->
+                    $scope.levelDownAlert = false
+                , 3000)
           $scope.level = response.data.level
           $scope.level_progress = response.data.level_progress
           if $scope.solvedPercentage > 1 and $scope.solvedPercentage < 20
@@ -154,7 +166,6 @@ angular.module('trixStudent.assignments.controllers', ['ngRoute', 'ngSanitize'])
     apiUrl = new Url()
     $scope._reloadAssignmentList = ->
         $scope.updateAssignmentList = {}
-        $scope.levelUp = true
     unbindAssignmentListChanged = $rootScope.$on 'assignmentList.updateList', ->
         $scope._reloadAssignmentList()
     $scope.$on('$destroy', unbindAssignmentListChanged)

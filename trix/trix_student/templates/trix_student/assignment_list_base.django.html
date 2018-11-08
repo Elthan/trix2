@@ -26,6 +26,12 @@
                             <p>{% trans "Level" %}
                             {% verbatim %}{{ level }}{% endverbatim %}
                             </p>
+                            <p class="trix-level text-success" ng-show="levelUpAlert" ng-cloak>
+                                {% trans "Level up!" %}
+                            </p>
+                            <p class="trix-level text-info" ng-show="levelDownAlert" ng-cloak>
+                                {% trans "Level down" %}
+                            </p>
                             <a href="#" data-toggle="popover"
                                 data-placement="left"
                                 data-trigger="focus"

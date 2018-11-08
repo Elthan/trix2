@@ -17,7 +17,7 @@
 }).call(this);
 
 (function() {
-  angular.module('trixStudent.assignments.controllers', ['ngRoute', 'ngSanitize']).controller('AddTagCtrl', [
+  angular.module('trixStudent.assignments.controllers', ['ngRoute', 'ngSanitize', 'ngAnimate']).controller('AddTagCtrl', [
     '$scope',
     '$window',
     function($scope,
@@ -143,9 +143,11 @@
     '$scope',
     '$http',
     '$rootScope',
+    '$timeout',
     function($scope,
     $http,
-    $rootScope) {
+    $rootScope,
+    $timeout) {
       var apiUrl,
     unbindProgressChanged,
     unbindProgressHide,
@@ -154,6 +156,8 @@
       $scope.hideProgress = false;
       apiUrl = new Url();
       apiUrl.query.progressjson = '1';
+      $scope.levelUpAlert = false;
+      $scope.levelDownAlert = false;
       $scope._loadProgress = function() {
         $scope.loading = true;
         return $http.get(apiUrl.toString()).then(function(response) {
@@ -161,9 +165,21 @@
           $scope.solvedPercentage = response.data.percent;
           $scope.experience = response.data.experience;
           // Call for reloading assignments if user leveled up or down
-          // console.log response.data
-          if (response.data.level !== $scope.level) {
+          if (response.data.level !== $scope.level && ($scope.level != null)) {
             $rootScope.$emit('assignmentList.updateList');
+            if (response.data.level > $scope.level) {
+              $scope.levelUpAlert = true;
+              $timeout(function() {
+                return $scope.levelUpAlert = false;
+              },
+    3000);
+            } else {
+              $scope.levelDownAlert = true;
+              $timeout(function() {
+                return $scope.levelDownAlert = false;
+              },
+    3000);
+            }
           }
           $scope.level = response.data.level;
           $scope.level_progress = response.data.level_progress;
@@ -211,8 +227,7 @@
     unbindAssignmentListChanged;
       apiUrl = new Url();
       $scope._reloadAssignmentList = function() {
-        $scope.updateAssignmentList = {};
-        return $scope.levelUp = true;
+        return $scope.updateAssignmentList = {};
       };
       unbindAssignmentListChanged = $rootScope.$on('assignmentList.updateList',
     function() {
