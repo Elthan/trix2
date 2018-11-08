@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trix_core\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-08 13:07+0100\n"
+"POT-Creation-Date: 2018-11-08 21:55+0100\n"
 "PO-Revision-Date: 2014-12-21 22:43+0100\n"
 "Last-Translator: Tor Ivar Johansen <tor@appresso.no>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,23 +26,31 @@ msgstr "Gi administratortilgang til valgte brukere"
 msgid "Remove admin access from the selected users"
 msgstr "Fjern administratortilgang til valgte brukere"
 
-#: trix/trix_core/admin.py:77
+#: trix/trix_core/admin.py:29
+msgid "Set selected users as inactive"
+msgstr "Sett  valgte brukere som inaktive"
+
+#: trix/trix_core/admin.py:36
+msgid "Set selected users as active"
+msgstr "Sett valgte brukere som aktive"
+
+#: trix/trix_core/admin.py:91
 msgid "tag is in use"
 msgstr "tag er i bruk"
 
-#: trix/trix_core/admin.py:82 trix/trix_core/models.py:288
+#: trix/trix_core/admin.py:96 trix/trix_core/models.py:288
 msgid "Yes"
 msgstr "Ja"
 
-#: trix/trix_core/admin.py:83 trix/trix_core/models.py:288
+#: trix/trix_core/admin.py:97 trix/trix_core/models.py:288
 msgid "No"
 msgstr "Nei"
 
-#: trix/trix_core/admin.py:129
+#: trix/trix_core/admin.py:143
 msgid "Number of assignments"
 msgstr "Antall oppgaver"
 
-#: trix/trix_core/admin.py:134
+#: trix/trix_core/admin.py:148
 msgid "Is in use"
 msgstr "Er i bruk"
 

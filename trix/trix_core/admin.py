@@ -22,6 +22,20 @@ def unset_administrators(modeladmin, request, queryset):
 unset_administrators.short_description = _("Remove admin access from the selected users")
 
 
+def disable_users(modeladmin, request, queryset):
+    queryset.update(is_active=False)
+
+
+disable_users.short_description = _("Set selected users as inactive")
+
+
+def enable_users(modeladmin, request, queryset):
+    queryset.update(is_active=True)
+
+
+enable_users.short_description = _("Set selected users as active")
+
+
 class UserCreationForm(forms.ModelForm):
     """A form for creating new users. Includes all the required
     fields, plus a repeated password."""
@@ -67,7 +81,7 @@ class UserAdmin(admin.ModelAdmin):
     search_fields = ['email']
     ordering = ['email']
     readonly_fields = ['last_login']
-    actions = [set_administrators, unset_administrators]
+    actions = [set_administrators, unset_administrators, disable_users, enable_users]
 
 
 admin.site.register(coremodels.User, UserAdmin)
