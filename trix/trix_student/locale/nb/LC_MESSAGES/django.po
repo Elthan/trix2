@@ -272,11 +272,11 @@ msgstr "Fant ingen oppgaver"
 
 #: trix/trix_student/templates/trix_student/include/assignment_list.django.html:8
 msgid "Did you solve them all?"
-msgstr "Hvordan løste du oppgaven?"
+msgstr "Løste du alle oppgavene?"
 
 #: trix/trix_student/templates/trix_student/include/assignment_list.django.html:10
 msgid "Show all assignments"
-msgstr "Fant ingen oppgaver"
+msgstr "Vis alle oppgaver"
 
 #: trix/trix_student/templates/trix_student/include/header.django.html:12
 msgid "Toggle navigation"
