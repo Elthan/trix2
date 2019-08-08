@@ -41,12 +41,6 @@ angular.module('trixStudent.assignments.controllers', ['ngRoute'])
     $scope.isVisible = false
 ])
 
-.controller('MenuCtrl', [
-  '$scope',
-  ($scope) ->
-    $scope.menuVisible = false
-])
-
 .controller('CourseCtrl', [
     '$scope',
     ($scope) ->
@@ -65,13 +59,13 @@ angular.module('trixStudent.assignments.controllers', ['ngRoute'])
 
     $scope.$watch 'howsolved', (newValue) ->
       if newValue == 'bymyself'
-        $scope.buttonClass = 'btn-success'
+        $scope.buttonClass = 'btn btn-success'
         $scope.boxClass = 'trix-assignment-solvedbymyself'
       else if newValue == 'withhelp'
-        $scope.buttonClass = 'btn-warning'
+        $scope.buttonClass = 'btn btn-warning'
         $scope.boxClass = 'trix-assignment-solvedwithhelp'
       else
-        $scope.buttonClass = 'btn-default'
+        $scope.buttonClass = 'btn btn-light'
         $scope.boxClass = 'trix-assignment-notsolved'
 
       # Tell AssignmentListProgressController to reload
@@ -133,11 +127,11 @@ angular.module('trixStudent.assignments.controllers', ['ngRoute'])
           $scope.loading = false
           $scope.solvedPercentage = response.data.percent
           if $scope.solvedPercentage > 1 and $scope.solvedPercentage < 20
-            $scope.progressBarClass = 'progress-bar-danger'
+            $scope.progressBarClass = 'bg-danger'
           else if $scope.solvedPercentage < 45
-            $scope.progressBarClass = 'progress-bar-warning'
+            $scope.progressBarClass = 'bg-warning'
           else if $scope.solvedPercentage == 100
-            $scope.progressBarClass = 'progress-bar-success'
+            $scope.progressBarClass = 'bg-success'
           else
             $scope.progressBarClass = ''
         .catch (response) ->

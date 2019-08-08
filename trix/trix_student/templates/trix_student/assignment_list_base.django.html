@@ -9,8 +9,8 @@
 {% endblock pageheader %}
 <div class="container">
     <div class="row">
-        <div id="assignments-taggingbox" class="col-sm-3 col-sm-push-9 col-md-3 col-md-push-9
-                trix-no-print">
+        <div id="assignments-taggingbox" class="order-md-1 col-md-12 col-lg-3 order-lg-2
+            trix-no-print trix-sticky">
             {% if request.user.is_authenticated and assignmentlist_with_howsolved %}
                 <div ng-controller="AssignmentListProgressController"
                         class="assignments-progressbox"
@@ -21,14 +21,14 @@
                     </div>
                     <div ng-show="!loading">
                         {% verbatim %}
-                            <div class="progress">
+                            <div class="progress" style="height: 2rem;">
                                 <div class="progress-bar"
                                         ng-class="progressBarClass"
                                         role="progressbar"
                                         aria-valuenow="{{ solvedPercentage }}"
                                         aria-valuemin="0"
                                         aria-valuemax="100"
-                                        style="width: {{ solvedPercentage }}%;">
+                                        style="width: {{ solvedPercentage }}%; font-size: 1rem;">
                                     {{ solvedPercentage }}%
                                 </div>
                             </div>
@@ -42,18 +42,18 @@
             <div ng-controller="RemoveTagCtrl" class="assignments-selectedtags-listing">
                 <h2>{% trans "Selected tags" %}:</h2>
                 {% for tag in non_removeable_tags %}
-                    <a tabindex="-1" class="btn btn-primary btn-sm disabled">
+                    <button tabindex="-1" class="btn btn-primary disabled">
                         {{ tag }}
-                    </a>
+                    </button>
                 {% endfor %}
                 {% if selected_tags %}
                     {% for tag in selected_tags %}
-                        <a class="btn btn-sm
+                        <button class="btn
                             {% if tag|startswith:'-' %}trix-btn-neg{% else %}btn-primary{% endif %}"
                                 ng-click="removeTag('{{ tag }}')">
                             {{ tag }}
                             <span class="fa fa-times"></span>
-                        </a>
+                        </button>
                     {% endfor %}
                 {% endif %}
             </div>
@@ -77,13 +77,13 @@
             {% endif %}
             <div class="trix-no-print">
                 <h3>{% trans "Print" %}:</h3>
-                <button type="button" class="btn btn-default" onclick="window.print()">
+                <button type="button" class="btn btn-light" onclick="window.print()">
                     <span class="fa fa-print"></span>
                     {% trans "Print this page" %}
                 </button>
             </div>
         </div>
-        <div class="col-sm-9 col-sm-pull-3 col-md-9 col-md-pull-3">
+        <div class="col-md-12 order-md-2 col-lg-8 order-lg-1">
             {% include "trix_student/include/pager.django.html" with pager_extraclass="pager-no-topmargin hidden-xs" %}
             {% for assignment, howsolved in assignmentlist_with_howsolved %}
                 {% include "trix_student/include/assignment.django.html" %}

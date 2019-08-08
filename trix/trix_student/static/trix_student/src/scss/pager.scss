@@ -20,12 +20,12 @@
   }
 
   li > a {
-    //    color: @brand-primary;
+    //    color: $brand-primary;
     padding: 0;
 
     &:hover {
       background: transparent;
-      color: @link-color;
+      color: $link-color;
     }
   }
 

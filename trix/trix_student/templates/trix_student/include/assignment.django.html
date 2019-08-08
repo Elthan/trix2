@@ -10,7 +10,7 @@
         ">
     {% if user_is_admin and course.id %}
         <a href="{% url 'trix_courseadmin-assignments-edit' course.id assignment.id %}?{{ urlencoded_success_url }}"
-                class="btn btn-trix-admin pull-right trix-no-print">
+                class="btn btn-trix-admin float-right trix-no-print">
             <span class="fa fa-edit"></span>
             {% trans "Edit" %}
         </a>
@@ -23,17 +23,15 @@
             <span class="fa fa-eye-slash" style="font-size: 24px;" title="{% trans 'Hidden assignment' %}"></span>
         {% endif %}
     </h2>
-
     {% if not disable_tags %}
         <div class="assignment-tags">
             {% for tag in assignment.tags.all %}
-                <button class="btn btn-default btn-xs" disabled>
+                <button class="btn btn-light btn-sm" disabled>
                     {{ tag.tag }}
                 </button>
             {% endfor %}
         </div>
     {% endif %}
-
     <section class="trix-assignmenttext  trix-markdownarticle" ng-non-bindable>
         {% trix_assignment_markdown assignment.text %}
     </section>

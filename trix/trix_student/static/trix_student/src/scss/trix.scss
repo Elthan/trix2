@@ -28,20 +28,16 @@ a {
 .trix-roleselect .cradmin-legacy-focusedpage-wrapper {
     width: 65%;
     margin-top: 40px;
-}
 
-@media(max-width: 992px) {
-    .trix-roleselect .cradmin-legacy-focusedpage-wrapper {
+    @include media-breakpoint-down(lg) {
         width: 100%;
     }
 }
 
 .trix-roleselect-container {
     width: 66%;
-}
 
-@media(max-width: 992px) {
-    .trix-roleselect-container {
+    @include media-breakpoint-down(lg) {
         width: 100%;
     }
 }
@@ -88,7 +84,7 @@ a {
 .objecttableview-global-buttons,
 .objecttableview-buttons-and-search-box {
     margin-bottom: 0;
-    background: @navbar-inverse-bg;
+    background: $navbar-inverse-bg;
     display: flex;
     justify-content: space-between;
     flex-direction: row;
@@ -102,7 +98,7 @@ a {
     padding-bottom: 20px;
 
     .btn {
-        background-color: @navbar-inverse-bg;
+        background-color: $navbar-inverse-bg;
         border-color: #224d68;
         color: #fff;
         transition: background-color 0.3s ease;
@@ -120,13 +116,13 @@ a {
     padding-right: 0;
     justify-content: flex-end;
     width: 500px;
-    background: @navbar-inverse-bg;
+    background: $navbar-inverse-bg;
 
     .input-group {
         margin-left: 20px;
         margin-right: 20px;
         margin-bottom: 0;
-        background: @navbar-inverse-bg;
+        background: $navbar-inverse-bg;
 
         .form-control {
             max-width: 250px;
@@ -143,7 +139,7 @@ a {
 
 .input-group-btn {
     .btn {
-        background-color: @navbar-inverse-bg;
+        background-color: $navbar-inverse-bg;
         border-color: #224d68;
         color: #fff;
         transition: background-color 0.3s ease;
@@ -163,10 +159,8 @@ a {
 
 .objecttableview-multiselectcolumn {
     padding: 8px;
-}
 
-@media (min-width: 992px) {
-    .objecttableview-multiselectcolumn {
+    @include media-breakpoint-up(lg) {
         padding-left: 50px !important;
     }
 }
@@ -175,31 +169,29 @@ a {
     color: #666;
 
     .btn {
-        color: @navbar-inverse-bg;
+        color: $navbar-inverse-bg;
     }
 
     .btn-danger {
         color: #fff;
     }
-}
 
-@media (max-width: 500px) {
-    .cradmin-legacy-table {
+    @include media-breakpoint-up(md) {
         & > thead tr th:nth-child(4),
         & > tbody tr td:nth-child(4) {
             display: none;
         }
     }
-}
 
-@media (max-width: 425px) {
-    .cradmin-legacy-table {
+    @include media-breakpoint-up(sm) {
         & > thead tr th:nth-child(3),
         & > tbody tr td:nth-child(3) {
             display: none;
         }
     }
 }
+
+
 
 /* Pad first column in permalinks 40px */
 .table.table.cradmin-legacy-table thead th:first-child,
@@ -267,12 +259,12 @@ a {
     }
 
     .controls .textarea {
-        font-size: @font-size-base;
+        font-size: $font-size-base;
     }
 
     .controls .select {
         padding: 10px 0px 10px 50px;
-        font-size: @font-size-base;
+        font-size: $font-size-base;
     }
 
     .controls .textinput:focus,
@@ -290,17 +282,15 @@ a {
     width: 60%;
     border-right: 1px dashed #ccc;
     padding: 20px 50px 40px 50px;
+
+    @include media-breakpoint-up(lg) {
+        width: 100%;
+        border-right: none;
+    }
 }
 
 .cradmin-acemarkdown .ace_editor {
     height: 500px;
-}
-
-@media(max-width: 992px) {
-    .cradmin-div-styled-as-textarea {
-        width: 100%;
-        border-right: none;
-    }
 }
 
 .controls .help-block {
@@ -308,10 +298,8 @@ a {
     margin-right: 10px;
     text-align: left;
     margin: 20px 10px;
-}
 
-@media(max-width: 992px) {
-    .controls .help-block {
+    @include media-breakpoint-up(lg) {
         display: none;
     }
 }
@@ -321,7 +309,7 @@ a {
 }
 
 .btn-toolbar .btn-group .btn {
-    color: @navbar-inverse-bg;
+    color: $navbar-inverse-bg;
 }
 
 /* Submit row */
@@ -332,7 +320,7 @@ a {
     position: fixed;
     z-index: 10000;
     bottom: 0px;
-    background-color: @trixstaff-bg;
+    background-color: $trixstaff-bg;
     padding: 10px 12px 5px 12px;
     border-radius: 4px 4px 0 0;
     margin: 0;
@@ -349,10 +337,8 @@ a {
     .form-control {
         margin: 5px 15px 10px 15px;
     }
-}
 
-@media (max-width: 992px) {
-    .cradmin_legacy_submitrow {
+    @include media-breakpoint-up(lg) {
         left: 0;
         right: 0;
 
@@ -361,6 +347,7 @@ a {
         }
     }
 }
+
 
 /**
 * Preview page
@@ -390,7 +377,7 @@ a {
 * Message container
 **/
 .trix-message-container {
-    background-color: @navbar-inverse-bg;
+    background-color: $navbar-inverse-bg;
     display: none;
 }
 

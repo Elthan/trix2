@@ -69,11 +69,6 @@
     function($scope) {
       return $scope.isVisible = false;
     }
-  ]).controller('MenuCtrl', [
-    '$scope',
-    function($scope) {
-      return $scope.menuVisible = false;
-    }
   ]).controller('CourseCtrl', [
     '$scope',
     function($scope) {
@@ -96,13 +91,13 @@
       $scope.$watch('howsolved',
     function(newValue) {
         if (newValue === 'bymyself') {
-          $scope.buttonClass = 'btn-success';
+          $scope.buttonClass = 'btn btn-success';
           $scope.boxClass = 'trix-assignment-solvedbymyself';
         } else if (newValue === 'withhelp') {
-          $scope.buttonClass = 'btn-warning';
+          $scope.buttonClass = 'btn btn-warning';
           $scope.boxClass = 'trix-assignment-solvedwithhelp';
         } else {
-          $scope.buttonClass = 'btn-default';
+          $scope.buttonClass = 'btn btn-light';
           $scope.boxClass = 'trix-assignment-notsolved';
         }
         // Tell AssignmentListProgressController to reload
@@ -170,11 +165,11 @@
           $scope.loading = false;
           $scope.solvedPercentage = response.data.percent;
           if ($scope.solvedPercentage > 1 && $scope.solvedPercentage < 20) {
-            return $scope.progressBarClass = 'progress-bar-danger';
+            return $scope.progressBarClass = 'bg-danger';
           } else if ($scope.solvedPercentage < 45) {
-            return $scope.progressBarClass = 'progress-bar-warning';
+            return $scope.progressBarClass = 'bg-warning';
           } else if ($scope.solvedPercentage === 100) {
-            return $scope.progressBarClass = 'progress-bar-success';
+            return $scope.progressBarClass = 'bg-success';
           } else {
             return $scope.progressBarClass = '';
           }

@@ -1,0 +1,25 @@
+.alert-edgetoedge {
+    border-radius: 0;
+    border-left-width: 0;
+    border-right-width: 0;
+}
+
+.alert-nomargin {
+    margin: 0;
+}
+
+.alert-staff {
+  @mixin alert-variant($trixstaff-bg, $trixstaff-border, $trixstaff-color) {
+    color: $color;
+    @include gradient-bg($background);
+    border-color: $border;
+
+    hr {
+      border-top-color: darken($border, 5%);
+    }
+
+    .alert-link {
+      color: darken($color, 10%);
+    }
+  }
+}

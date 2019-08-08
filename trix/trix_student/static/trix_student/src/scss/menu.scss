@@ -8,7 +8,7 @@
     margin: 0;
     padding: 0;
 
-    @media (min-width: @screen-md-min) {
+    @include media-breakpoint-up(md) {
         display: block !important;
         text-align: center;
         padding-top: 25px;

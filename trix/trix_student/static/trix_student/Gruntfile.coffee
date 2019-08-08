@@ -2,52 +2,47 @@ module.exports = (grunt) ->
 
   appfiles = {
     coffeecode: ['src/**/*.coffee', '!src/**/*.spec.coffee']
-    less: ['src/less/*.less', 'src/less/**/*.less']
+    scss: ['src/scss/*.scss', 'src/scss/**/*.scss']
   }
 
   vendorfiles = {
     fonts: [
-      'bower_components/components-font-awesome/webfonts/fa-brands-400.eot'
-      'bower_components/components-font-awesome/webfonts/fa-brands-400.svg'
-      'bower_components/components-font-awesome/webfonts/fa-brands-400.ttf'
-      'bower_components/components-font-awesome/webfonts/fa-brands-400.woff'
-      'bower_components/components-font-awesome/webfonts/fa-brands-400.woff2'
-      'bower_components/components-font-awesome/webfonts/fa-regular-400.eot'
-      'bower_components/components-font-awesome/webfonts/fa-regular-400.svg'
-      'bower_components/components-font-awesome/webfonts/fa-regular-400.ttf'
-      'bower_components/components-font-awesome/webfonts/fa-regular-400.woff'
-      'bower_components/components-font-awesome/webfonts/fa-regular-400.woff2'
-      'bower_components/components-font-awesome/webfonts/fa-solid-900.eot'
-      'bower_components/components-font-awesome/webfonts/fa-solid-900.svg'
-      'bower_components/components-font-awesome/webfonts/fa-solid-900.ttf'
-      'bower_components/components-font-awesome/webfonts/fa-solid-900.woff'
-      'bower_components/components-font-awesome/webfonts/fa-solid-900.woff2'
-    ]
-    glyph_fonts: [
-      'bower_components/bootstrap/fonts/glyphicons-halflings-regular.eot'
-      'bower_components/bootstrap/fonts/glyphicons-halflings-regular.svg'
-      'bower_components/bootstrap/fonts/glyphicons-halflings-regular.ttf'
-      'bower_components/bootstrap/fonts/glyphicons-halflings-regular.woff'
+      'node_modules/components-font-awesome/webfonts/fa-brands-400.eot'
+      'node_modules/components-font-awesome/webfonts/fa-brands-400.svg'
+      'node_modules/components-font-awesome/webfonts/fa-brands-400.ttf'
+      'node_modules/components-font-awesome/webfonts/fa-brands-400.woff'
+      'node_modules/components-font-awesome/webfonts/fa-brands-400.woff2'
+      'node_modules/components-font-awesome/webfonts/fa-regular-400.eot'
+      'node_modules/components-font-awesome/webfonts/fa-regular-400.svg'
+      'node_modules/components-font-awesome/webfonts/fa-regular-400.ttf'
+      'node_modules/components-font-awesome/webfonts/fa-regular-400.woff'
+      'node_modules/components-font-awesome/webfonts/fa-regular-400.woff2'
+      'node_modules/components-font-awesome/webfonts/fa-solid-900.eot'
+      'node_modules/components-font-awesome/webfonts/fa-solid-900.svg'
+      'node_modules/components-font-awesome/webfonts/fa-solid-900.ttf'
+      'node_modules/components-font-awesome/webfonts/fa-solid-900.woff'
+      'node_modules/components-font-awesome/webfonts/fa-solid-900.woff2'
     ]
     js: [
-      'bower_components/jquery/dist/jquery.slim.min.js'
-      'bower_components/jquery/dist/jquery.slim.min.map'
-      'bower_components/angular/angular.min.js'
-      'bower_components/angular/angular.min.js.map'
-      'bower_components/angular-cookies/angular-cookies.min.js'
-      'bower_components/angular-cookies/angular-cookies.min.js.map'
-      'bower_components/angular-route/angular-route.min.js'
-      'bower_components/angular-route/angular-route.min.js.map'
-      'bower_components/jsurl/url.min.js'
-      'bower_components/angular-bootstrap/ui-bootstrap.min.js'
-      'bower_components/eonasdan-bootstrap-datetimepicker/build' +
-        '/js/bootstrap-datetimepicker.min.js'
-      'bower_components/bootstrap/js/alert.js'
+      'node_modules/angular/angular.min.js'
+      'node_modules/angular/angular.min.js.map'
+      'node_modules/angular-bootstrap/ui-bootstrap.min.js'
+      'node_modules/angular-cookies/angular-cookies.min.js'
+      'node_modules/angular-cookies/angular-cookies.min.js.map'
+      'node_modules/angular-route/angular-route.min.js'
+      'node_modules/angular-route/angular-route.min.js.map'
+      'node_modules/bootstrap/dist/js/bootstrap.min.js'
+      'node_modules/bootstrap/dist/js/bootstrap.min.js.map'
+      'node_modules/jsurl/url.min.js'
+      'node_modules/jquery/dist/jquery.min.js'
+      'node_modules/jquery/dist/jquery.min.map'
+      'node_modules/popper.js/dist/umd/popper.min.js'
+      'node_modules/popper.js/dist/umd/popper.min.js.map'
     ]
   }
 
   grunt.loadNpmTasks('grunt-contrib-watch')
-  grunt.loadNpmTasks('grunt-contrib-less')
+  grunt.loadNpmTasks('grunt-contrib-sass')
   grunt.loadNpmTasks('grunt-contrib-copy')
   grunt.loadNpmTasks('grunt-contrib-coffee')
   grunt.loadNpmTasks('grunt-coffeelint')
@@ -57,9 +52,9 @@ module.exports = (grunt) ->
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json')
     delta:
-      less:
-        files: appfiles.less
-        tasks: 'less'
+      sass:
+        files: appfiles.scss
+        tasks: 'sass'
       coffeecode:
         files: appfiles.coffeecode
         tasks: [
@@ -68,13 +63,14 @@ module.exports = (grunt) ->
         files: 'Gruntfile.coffee'
         tasks: ['coffeelint:gruntfile']
 
-    less:
+    sass:
       development:
         options:
-          paths: ["less", "bower_components"]
+          noSourceMap: true
+          loadPath: ["scss", "node_modules"]
         files:
-          ["dist/css/styles.css": "src/less/styles.less",
-           "dist/css/wcag.css": "src/less/wcag.less"]
+          ["dist/css/styles.css": "src/scss/styles.scss",
+           "dist/css/wcag.css": "src/scss/wcag.scss"]
 
     coffeelint:
       code: appfiles.coffeecode
@@ -113,11 +109,6 @@ module.exports = (grunt) ->
           flatten: true
           src: vendorfiles.js
           dest: 'dist/vendor/js/'
-        }, {
-          expand: true
-          flatten: true
-          src: vendorfiles.glyph_fonts
-          dest: 'dist/fonts/'
         }]
   })
 
@@ -128,7 +119,7 @@ module.exports = (grunt) ->
 
   grunt.registerTask('build', [
     'coffeelint'
-    'less'
+    'sass'
     'coffee:code'
     'buildCodeDist',
     'copy:vendor'

@@ -1,17 +1,30 @@
 {
-    "name": "trix_student",
-    "version": "0.1.0",
-    "devDependencies": {
-        "coffeescript": "~2.3.1",
-        "coffeelint": "^2.1.0",
-        "grunt": "^1.0.3",
-        "grunt-cli": "^1.2.0",
-        "grunt-coffeelint": "0.0.16",
-        "grunt-contrib-coffee": "^2.0.0",
-        "grunt-contrib-concat": "^1.0.1",
-        "grunt-contrib-copy": "^1.0.0",
-        "grunt-contrib-less": "~2.0.0",
-        "grunt-contrib-uglify": "^3.3.0",
-        "grunt-contrib-watch": "~1.1.0"
-    }
+  "name": "trix_student",
+  "version": "0.1.0",
+  "devDependencies": {
+    "angular": "^1.7.8",
+    "angular-bootstrap": "^0.12.2",
+    "angular-cookies": "^1.7.8",
+    "angular-mocks": "^1.7.8",
+    "bootstrap": "^4.3.1",
+    "coffeelint": "^2.1.0",
+    "coffeescript": "~2.3.1",
+    "components-font-awesome": "^5.9.0",
+    "font-awesome": "^4.7.0",
+    "grunt": "^1.0.3",
+    "grunt-cli": "^1.2.0",
+    "grunt-coffeelint": "0.0.16",
+    "grunt-contrib-coffee": "^2.0.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-less": "~2.0.0",
+    "grunt-contrib-sass": "^1.0.0",
+    "grunt-contrib-uglify": "^3.3.0",
+    "grunt-contrib-watch": "~1.1.0",
+    "jquery": "^3.4.1",
+    "jsurl": "^0.1.5",
+    "popper.js": "^1.15.0",
+    "pygments": "^0.2.1",
+    "yarn": "^1.17.3"
+  }
 }

@@ -40,6 +40,16 @@
     }
 }
 
+#trixNavbar {
+    a {
+        color: rgba(255, 255, 255, 0.8);
+
+        &:hover {
+            color: rgba(255, 255, 255, 1);
+        }
+    }
+}
+
 /* Assignment Page Fixes */
 .trix-assignmentsolutionexpander {
     color: #306DA6;

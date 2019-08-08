@@ -83,24 +83,12 @@ def run_tests(ctx):
 
 # Static tasks #
 @task
-def npm_install(ctx, gbl=False):
+def yarn_install(ctx):
     """
-    Run npm install
-    """
-    with ctx.cd('trix/trix_student/static/trix_student'):
-        if (gbl):
-            ctx.run('npm install -g')
-        else:
-            ctx.run('npm install')
-
-
-@task
-def bower_install(ctx):
-    """
-    Run bower install
+    Run yarn install
     """
     with ctx.cd('trix/trix_student/static/trix_student'):
-        ctx.run('bower install')
+        ctx.run('yarn install')
 
 
 @task
@@ -137,7 +125,7 @@ def jsmakemessages(ctx, langcode='nb'):
     """
     _manage(ctx, 'makemessages -d djangojs -l {} -v3 '
             '-i "**/static/**/node_modules/*" '
-            '-i "**/static/**/bower_components/**"'.format(langcode))
+            '-i "**/static/**/node_modules/@bower_components/**"'.format(langcode))
 
 
 @task

@@ -14,17 +14,17 @@ footer {
     padding-left: 10px;
     padding-right: 10px;
     width: 100%;
-    font-size: 0.8em;
+    font-size: 0.9em;
 
     a {
         color: #757575;
     }
 
-    > div {
-        margin: 0 10px;
+    div {
+        margin: 0px 10px;
     }
 
-    @media (max-width: @screen-xs-max) {
+    @include media-breakpoint-down(sm) {
         display: block;
     }
 }

@@ -48,7 +48,7 @@
                     {% endif %}
                     {% if user.is_superuser %}
                         {% if student not in course.owner.all %}
-                            <input class="btn btn-default" type="submit" name="owner"
+                            <input class="btn btn-secondary" type="submit" name="owner"
                                 value="{% trans 'Make owner' %}" />
                         {% endif %}
                     {% endif %}
