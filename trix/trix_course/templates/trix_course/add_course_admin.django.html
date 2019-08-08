@@ -65,7 +65,7 @@
         <input class="btn btn-primary" type="submit" name="admin_list"
             value="{% trans 'Make admins' %}" />
         {% if user.is_superuser %}
-            <input class="btn btn-default" type="submit" name="owner_list"
+            <input class="btn btn-outline-secondary" type="submit" name="owner_list"
                 value="{% trans 'Make owners' %}" />
         {% endif %}
     </form>

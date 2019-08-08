@@ -92,7 +92,7 @@
                         </div>
                     </div>
                     <div class="trix-date-button">
-                        <input type="submit" class="btn btn-default" value="{% trans 'Filter' %}" />
+                        <input type="submit" class="btn btn-outline-secondary" value="{% trans 'Filter' %}" />
                     </div>
                 </form>
             </div>
@@ -140,7 +140,7 @@
                 <h2>{{ assignment }}</h2>
                 <span class="btn-group">
                     {% for tag in assignment.tags.all %}
-                        <button class="btn btn-default btn-xs" disabled>{{ tag.tag }}</button>
+                        <button class="btn btn-outline-secondary btn-sm" disabled>{{ tag.tag }}</button>
                     {% endfor %}
                 </span>
                 <p>{{ assignment.id }}</p>
