@@ -11,16 +11,12 @@
   background-color: #337AB8;
 }
 
-.progress-bar-danger {
-  background-color: #D33A36;
+.bg-warning {
+  color: #3F4A55 !important;
 }
 
-.progress-bar-warning {
-  color: #3F4A55;
-}
-
-.progress-bar-success {
-  background-color: #378537;
+.bg-success {
+  background-color: #378537 !important;
 }
 
 .btn-success {
@@ -29,6 +25,11 @@
 
 .btn-warning {
   color: #3F4A55;
+}
+
+.btn-primary {
+  background-color: #0071EB;
+  border-color: #0071EB;
 }
 
 .trix-btn-neg  {

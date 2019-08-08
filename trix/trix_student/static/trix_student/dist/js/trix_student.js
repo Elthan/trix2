@@ -86,7 +86,7 @@
     $rootScope) {
       $scope.howsolved = null;
       $scope.saving = false;
-      $scope.buttonClass = 'btn-default';
+      $scope.buttonClass = 'btn-outline-secondary';
       $scope.boxClass = '';
       $scope.$watch('howsolved',
     function(newValue) {

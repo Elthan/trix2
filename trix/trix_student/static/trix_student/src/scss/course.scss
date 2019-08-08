@@ -179,15 +179,15 @@
         border: 1px solid #224d68;
         color: white;
         background-color: #377CA8;
+    }
 
-        &:hover,
-        &:active,
-        &:focus {
-            background-color: #224d68;
-            border-color: #224d68;
-            color: white;
-            outline: none;
-        }
+    a:focus, a:hover, a:active,
+    button:focus, button:active, button:hover {
+        background-color: #224d68 !important;
+        border-color: #224d68 !important;
+        color: white !important;
+        outline: none !important;
+        box-shadow: none !important;
     }
 }
 
@@ -205,7 +205,7 @@
         background-color: white;
         color: #555;
         padding: 6px 12px;
-        height: 36px;
+        height: 37px;
         border: 1px solid #ccc;
         outline: none;
         margin-left: 0;
@@ -218,7 +218,7 @@
         border-bottom-left-radius: 0;
         border-top-left-radius: 0;
         border-left: none;
-        margin-top: -4px;
+        margin-top: -3px;
         height: 36px;
 
         > i {
